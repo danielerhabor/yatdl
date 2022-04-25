@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import NavBar from './components/NavBar';
+import './App.module.css';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header>
+        <NavBar />
       </header>
-    </div>
+      <main>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis
+        mollitia harum quo fugit expedita maiores odit ratione fuga, dolorum
+        qui, magni cupiditate dolores hic porro! Ex molestiae vero maiores qui?
+      </main>
+    </>
   );
-}
+};
 
 export default App;
