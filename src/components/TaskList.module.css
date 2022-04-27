@@ -1,0 +1,9 @@
+.tasklist {
+  list-style: none;
+  border-style: ridge;
+  border-radius: 1rem;
+  border-color: forestgreen;
+  background-color: azure;
+  padding: 1rem;
+  margin: 1rem;
+}
