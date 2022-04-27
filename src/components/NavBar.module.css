@@ -1,0 +1,17 @@
+.nav ul {
+  padding: 1rem;
+  background-color: antiquewhite;
+  width: 100vw;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav li {
+  line-height: 0.9rem;
+  font-size: 1rem;
+}
+
+.nav .burgerBtn {
+  justify-self: flex-start;
+}
