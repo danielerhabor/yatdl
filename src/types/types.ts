@@ -1,10 +1,10 @@
 export enum Status {
-  TODO,
-  DOING,
-  DONE,
-  INCOMPLETE,
-  RESCHEDULED,
-};
+  TODO = 'todo',
+  DOING = 'doing',
+  DONE = 'done',
+  INCOMPLETE = 'incomplete',
+  RESCHEDULED = 'rescheduled',
+}
 
 export type Task = {
   id: number;

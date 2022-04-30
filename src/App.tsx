@@ -1,4 +1,4 @@
-import './App.module.css';
+import styles from './App.module.css';
 
 import { Task, Status } from './types/types';
 
@@ -9,29 +9,29 @@ const App: React.FC = () => {
   const tasks: Task[] = [
     {
       id: 0,
-      name: 'Do Stuff',
+      name: 'First Task',
       description: 'Hello World',
       created_at: new Date(),
       status: Status.TODO,
     },
     {
       id: 2,
-      name: 'Do Stuff',
+      name: 'Second Task',
       description: 'Hello World',
       created_at: new Date(),
-      status: Status.TODO,
+      status: Status.DOING,
     },
     {
       id: 3,
-      name: 'Do Stuff',
+      name: 'Third Task',
       description: 'Hello World',
       created_at: new Date(),
-      status: Status.TODO,
+      status: Status.DONE,
     },
   ];
 
   return (
-    <>
+    <div className={styles.borderMarginReset}>
       <header>
         <NavBar />
       </header>
@@ -41,7 +41,7 @@ const App: React.FC = () => {
         qui, magni cupiditate dolores hic porro! Ex molestiae vero maiores qui?
       </main>
       <TaskList tasks={tasks} />
-    </>
+    </div>
   );
 };
 

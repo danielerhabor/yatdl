@@ -2,12 +2,10 @@ import React from 'react';
 
 import { Task } from '../types/types';
 
-const TaskItem: React.FC<{ task: Task }> = (props) => {
-  const { task } = props;
-
+const TaskItem: React.FC<{ task: Task }> = ({ task }) => {
   return (
     <li>
-      {task.id} {task.description} {task.created_at.toDateString()}
+      {task.id} {task.description} {task.created_at.toDateString()} {task.status}
     </li>
   );
 };
