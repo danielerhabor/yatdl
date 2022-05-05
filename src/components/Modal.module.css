@@ -1,0 +1,27 @@
+.modal {
+  display: flex;
+  background-color: rgb(152, 172, 189);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
+  max-width: 100%;
+  height: 50%;
+  max-height: 75%;
+  z-index: 1010;
+}
+
+.modal.closed {
+  display: none;
+}
+
+.backdrop {
+  z-index: 1000;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

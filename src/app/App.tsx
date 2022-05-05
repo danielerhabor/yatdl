@@ -1,9 +1,12 @@
 import styles from './App.module.css';
 
-import { Task, Status } from './types/types';
+import { Task, Status } from '../types/types';
 
-import NavBar from './components/NavBar';
-import TaskList from './components/TaskList';
+import NavBar from '../components/NavBar';
+import TaskList from '../components/TaskList';
+import Modal from '../components/Modal';
+import { RootState } from '../app/store';
+import { useSelector } from 'react-redux';
 
 const App: React.FC = () => {
   const tasks: Task[] = [
@@ -30,6 +33,10 @@ const App: React.FC = () => {
     },
   ];
 
+  // const [modal, setModal] = useState(false);
+  // const Toggle = () => setModal(!modal);
+  const modal = useSelector((state: RootState) => state.modal.value);
+
   return (
     <div className={styles.borderMarginReset}>
       <header>
@@ -41,6 +48,7 @@ const App: React.FC = () => {
         qui, magni cupiditate dolores hic porro! Ex molestiae vero maiores qui?
       </main>
       <TaskList tasks={tasks} />
+      {modal && <Modal />}
     </div>
   );
 };
