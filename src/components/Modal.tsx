@@ -9,7 +9,10 @@ const backdropRoot = document.getElementById('backdrop-root') as HTMLElement;
 const overlayRoot = document.getElementById('overlay-root') as HTMLElement;
 
 const Backdrop: React.FC = () => {
-  return <div className={styles.backdrop}></div>;
+  const dispatch = useDispatch();
+  return (
+    <div onClick={() => dispatch(close())} className={styles.backdrop}></div>
+  );
 };
 
 const Modal: React.FC = () => {
@@ -28,9 +31,18 @@ const Modal: React.FC = () => {
       {createPortal(<Backdrop />, backdropRoot)}
       {createPortal(
         <div className={styles.modal}>
-          <h2>Some Task</h2>
-          <input type="text" />
-          <button type="button" onClick={() => dispatch(close())}>CLOSE</button>
+          <div className={styles.modalHeader}>
+            <div>DATE_PICKER</div>
+            <button
+              className={styles.modalCloseBtn}
+              type="button"
+              onClick={() => dispatch(close())}
+            >
+              X
+            </button>
+          </div>
+          <textarea name="task-descripton"></textarea>
+          <div className={styles.modalFooter}>MODAL_FOOTER_HERE</div>
         </div>,
         overlayRoot
       )}
