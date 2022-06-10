@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Task } from '../types/types';
+import { Task } from '../../types/types';
 
 import TaskItem from './TaskItem';
 import styles from './TaskList.module.css';

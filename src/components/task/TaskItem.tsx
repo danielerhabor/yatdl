@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { useDispatch } from 'react-redux';
-import { open } from '../features/modal/modalSlice';
+import { open } from '../../features/modal/modalSlice';
 
-import { Task } from '../types/types';
+import { Task } from '../../types/types';
 
 const TaskItem: React.FC<{ task: Task }> = ({ task }) => {
   const dispatch = useDispatch();

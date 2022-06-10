@@ -1,9 +1,9 @@
 import styles from './Modal.module.css';
 
-import { RootState } from '../app/store';
+import { RootState } from '../../app/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPortal } from 'react-dom';
-import { close } from '../features/modal/modalSlice';
+import { close } from '../../features/modal/modalSlice';
 
 const backdropRoot = document.getElementById('backdrop-root') as HTMLElement;
 const overlayRoot = document.getElementById('overlay-root') as HTMLElement;
