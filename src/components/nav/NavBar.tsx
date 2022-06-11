@@ -1,14 +1,15 @@
 import React from 'react';
-import styles from './NavBar.module.css';
 
 const NavBar: React.FC = () => {
   return (
-    <nav className={styles.nav}>
+    <nav>
       <ul>
-        <li className={styles.burgerBtn}>BURGER_PLACE_HOLDER</li>
-        <li>PLACE_HOLDER</li>
-        <li>PLACE_HOLDER</li>
+        <li>BURGER_MENU</li>
+        <li>NAV_STUFF_1</li>
+        <li>NAV_STUFF_2</li>
       </ul>
+      <button>NEXT_MONTH</button>
+      <button>PREVIOUS_MONTH</button>
     </nav>
   );
 };

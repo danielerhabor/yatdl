@@ -1,12 +1,7 @@
-import styles from './App.module.css';
-
-import { Task, Status } from '../types/types';
-
 import NavBar from '../components/nav/NavBar';
 import TaskList from '../components/task/TaskList';
-import Modal from '../components/modal/Modal';
-import { RootState } from '../app/store';
-import { useSelector } from 'react-redux';
+
+import { Task, Status } from '../types/types';
 
 const App: React.FC = () => {
   const tasks: Task[] = [
@@ -33,10 +28,8 @@ const App: React.FC = () => {
     },
   ];
 
-  const modal = useSelector((state: RootState) => state.modal.value);
-
   return (
-    <div className={styles.borderMarginReset}>
+    <>
       <header>
         <NavBar />
       </header>
@@ -46,8 +39,7 @@ const App: React.FC = () => {
         qui, magni cupiditate dolores hic porro! Ex molestiae vero maiores qui?
       </main>
       <TaskList tasks={tasks} />
-      {modal && <Modal />}
-    </div>
+    </>
   );
 };
 

@@ -1,19 +1,27 @@
-import React from 'react';
+import React, {
+  HTMLInputTypeAttribute,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+
+import TaskItem from './TaskItem';
 
 import { Task } from '../../types/types';
 
-import TaskItem from './TaskItem';
-import styles from './TaskList.module.css';
-
 const TaskList: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
+
   return (
-    <div className={styles.tasklist}>
-      <h2> Monday </h2>
+    <div>
+      <h2>DAY_OF_WEEK</h2>     
       <ul>
         {tasks.map((task: Task) => (
           <TaskItem key={task.id} task={task} />
         ))}
       </ul>
+      <button>
+        ADD_TASK
+      </button>
     </div>
   );
 };
