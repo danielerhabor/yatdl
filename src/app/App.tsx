@@ -1,9 +1,15 @@
+import Modal from '../components/modal/Modal';
 import NavBar from '../components/nav/NavBar';
 import TaskList from '../components/task/TaskList';
 
 import { Task, Status } from '../types/types';
+import { range } from '../util/util';
+
+import { useAppSelector } from './hooks'
+
 
 const App: React.FC = () => {
+  const numDays: number = 7;
   const tasks: Task[] = [
     {
       id: 0,
@@ -28,6 +34,8 @@ const App: React.FC = () => {
     },
   ];
 
+  const isModalOpen: boolean = useAppSelector((state) => state.modal.isOpen);
+
   return (
     <>
       <header>
@@ -38,7 +46,11 @@ const App: React.FC = () => {
         mollitia harum quo fugit expedita maiores odit ratione fuga, dolorum
         qui, magni cupiditate dolores hic porro! Ex molestiae vero maiores qui?
       </main>
-      <TaskList tasks={tasks} />
+      {isModalOpen && <Modal />}
+      {/* Traverse through numbers 1 to 7 inclusive and print render the `TaskList` component */}
+      {range(1, numDays, 1).map((i) => (
+        <TaskList key={i} tasks={tasks} />
+      ))}
     </>
   );
 };
