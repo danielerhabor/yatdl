@@ -2,6 +2,8 @@ import ReactDOM from 'react-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { setIsOpen } from '../../features/modalSlice';
 
+import styles from './Modal.module.css';
+
 const Modal: React.FC = () => {
   const dispatch = useAppDispatch();
   const closeModal = () => {
@@ -10,14 +12,16 @@ const Modal: React.FC = () => {
 
   const domModal = document.getElementById('root-modal') as HTMLElement;
   const reactModal = (
-    <div className="modalOverlay">
-      <div className="modalContainer">
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContainer}>
         <header className="modalHeader">
           <input
             className="modalTaskName"
             placeholder="Enter task name..."
           ></input>
-          <button onClick={closeModal} className="modalCloseButton">&times;</button>
+          <button onClick={closeModal} className="modalCloseButton">
+            &times;
+          </button>
         </header>
         <textarea
           className="modalTextArea"
