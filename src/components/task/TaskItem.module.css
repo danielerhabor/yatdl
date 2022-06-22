@@ -1,0 +1,6 @@
+.taskItem {
+  list-style-type: none;
+  background-color: aliceblue;
+  border-radius: 1rem;
+  margin: .25rem;
+}
