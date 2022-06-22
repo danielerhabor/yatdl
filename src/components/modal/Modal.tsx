@@ -29,7 +29,7 @@ const Modal: React.FC = () => {
         ></textarea>
         <footer className="modalFooter">
           <button className="modalSaveButton">Save</button>
-          <button className="modalCancelbutton">Cancel</button>
+          <button onClick={closeModal} className="modalCancelbutton">Cancel</button>
         </footer>
       </div>
     </div>
