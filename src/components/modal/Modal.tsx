@@ -37,7 +37,6 @@ const Modal: React.FC = () => {
       <div className={styles.modalContainer}>
         <header className="modalHeader">
           <input
-            
             onChange={e => setTitle(e.target.value)}
             className="modalTaskName"
             placeholder="Enter task name..."

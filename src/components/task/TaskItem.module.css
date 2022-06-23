@@ -2,5 +2,10 @@
   list-style-type: none;
   background-color: aliceblue;
   border-radius: 1rem;
-  margin: .25rem;
+  margin: 0.25rem;
+}
+
+.taskItem:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
 }
