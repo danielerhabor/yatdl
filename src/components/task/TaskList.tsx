@@ -5,16 +5,12 @@ import TaskItem from './TaskItem';
 import { Task } from '../../types/types';
 
 import { useAppDispatch } from '../../app/hooks';
-import { setIsOpen } from '../../features/modalSlice';
+import { openModal } from '../../features/modalSlice';
 
 import styles from './TaskList.module.css';
 
 const TaskList: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
   const dispatch = useAppDispatch();
-
-  const openModal = () => {
-    dispatch(setIsOpen(true));
-  };
 
   return (
     <div className={styles.taskList}>
@@ -24,7 +20,7 @@ const TaskList: React.FC<{ tasks: Task[] }> = ({ tasks }) => {
           <TaskItem key={task.id} task={task} />
         ))}
       </ul>
-      <button onClick={openModal}>ADD_TASK</button>
+      <button onClick={() => dispatch(openModal())}>ADD_TASK</button>
     </div>
   );
 };
