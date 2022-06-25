@@ -8,10 +8,11 @@ import { closeModal } from '../../features/modalSlice';
 
 import styles from './Modal.module.css';
 
-const Modal: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const task: Task = useAppSelector((state) => state.modal.task) as Task;
-
+const Modal: React.FC<{
+  task: Task;
+  onSave: CallableFunction;
+  onClose: CallableFunction;
+}> = ({ task, onSave, onClose }) => {
   const [description, setDescription] = useState('');
   const [title, setTitle] = useState('');
 
@@ -24,10 +25,11 @@ const Modal: React.FC = () => {
     }
   }, [task]);
 
-  const close = () => {
+  const closeModal = () => {
     // clear the title and description
     clearModal();
-    dispatch(closeModal());
+    // close the modal
+    onClose();
   };
 
   const clearModal = () => {
@@ -38,10 +40,10 @@ const Modal: React.FC = () => {
   const saveHandler = () => {
     // print the title of the modal
     // and the text description
-    console.log(title);
-    console.log(description);
+    // console.log(title);
+    // console.log(description);
     // close the modal
-    close();
+    onSave(title, description);
   };
 
   const domModal = document.getElementById('root-modal') as HTMLElement;
@@ -55,7 +57,7 @@ const Modal: React.FC = () => {
             className="modalTaskName"
             placeholder="Enter task name..."
           ></input>
-          <button onClick={close} className="modalCloseButton">
+          <button onClick={closeModal} className="modalCloseButton">
             &times;
           </button>
         </header>
@@ -69,7 +71,7 @@ const Modal: React.FC = () => {
           <button onClick={saveHandler} className="modalSaveButton">
             Save
           </button>
-          <button onClick={close} className="modalCancelbutton">
+          <button onClick={closeModal} className="modalCancelbutton">
             Cancel
           </button>
         </footer>
