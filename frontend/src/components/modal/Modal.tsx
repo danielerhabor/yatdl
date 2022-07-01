@@ -25,7 +25,7 @@ const Modal: React.FC<{
     }
   }, [task]);
 
-  const closeModal = () => {
+  const closeHandler = () => {
     // clear the title and description
     clearModal();
     // close the modal
@@ -38,11 +38,6 @@ const Modal: React.FC<{
   };
 
   const saveHandler = () => {
-    // print the title of the modal
-    // and the text description
-    // console.log(title);
-    // console.log(description);
-    // close the modal
     onSave(title, description);
   };
 
@@ -57,7 +52,7 @@ const Modal: React.FC<{
             className="modalTaskName"
             placeholder="Enter task name..."
           ></input>
-          <button onClick={closeModal} className="modalCloseButton">
+          <button onClick={closeHandler} className="modalCloseButton">
             &times;
           </button>
         </header>
@@ -71,7 +66,7 @@ const Modal: React.FC<{
           <button onClick={saveHandler} className="modalSaveButton">
             Save
           </button>
-          <button onClick={closeModal} className="modalCancelbutton">
+          <button onClick={closeHandler} className="modalCancelbutton">
             Cancel
           </button>
         </footer>
