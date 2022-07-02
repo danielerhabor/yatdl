@@ -1,5 +1,4 @@
 import dayjs, { Dayjs } from 'dayjs';
-import de from 'dayjs/locale/de';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { Task } from '../types/types';
 
