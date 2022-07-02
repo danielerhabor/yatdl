@@ -1,4 +1,9 @@
 import dayjs, { Dayjs } from 'dayjs';
+import de from 'dayjs/locale/de';
+import isoWeek from 'dayjs/plugin/isoWeek';
+import { Task } from '../types/types';
+
+dayjs.extend(isoWeek); // Week starts from Monday at 1 to Sunday at 7
 
 /**
  * Generates a sequence of numbers from `start` to `stop` by `step`
@@ -18,7 +23,21 @@ export const range = (start: number, stop: number, step: number): number[] =>
  */
 
 export const getSevenDaysIncluding = (date: Date): Dayjs[] => {
-  const days = range(0, 6, 1).map(i => dayjs(date).add(i, 'day'));
-
+  // dayjs().startOf();
+  const day = dayjs(date);
+  const days = range(1, 7, 1).map((i) => day.isoWeekday(i));
   return days;
+};
+
+/**
+ * Given a `task`, return true if the task is
+ * in the current week, false otherwise
+ * @param task
+ */
+export const isTaskInCurrentWeek = (task: Task): boolean => {
+  // get the dates from Monday to Sunday that are in the current week
+  // console.log(task);
+  const sevenDays = getSevenDaysIncluding(new Date());
+  // console.log(sevenDays);
+  return sevenDays.some((day) => day.isSame(dayjs(task.created_at), 'day'));
 };

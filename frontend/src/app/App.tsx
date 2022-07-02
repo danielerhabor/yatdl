@@ -2,17 +2,22 @@ import Modal from '../components/modal/Modal';
 import NavBar from '../components/nav/NavBar';
 import TaskList from '../components/task/TaskList';
 
-import { range, getSevenDaysIncluding } from '../util/util';
+import { range, getSevenDaysIncluding, isTaskInCurrentWeek } from '../util/util';
 
 // import tasksData from '../db/tasks.json';
 import { Dayjs } from 'dayjs';
 import { useGetAllTasks } from '../util/hooks';
+import { Task } from '../types/types';
 
 const App: React.FC = () => {
+  // console.log("App starting rendering...");
   const apiEndpoint: string = 'http://localhost:8080/tasks';
   const data = useGetAllTasks(apiEndpoint);
   const days: Dayjs[] = getSevenDaysIncluding(new Date());
   const numDays: number = 7;
+
+  const tasks: Task[] = data.tasks.filter(isTaskInCurrentWeek);
+  // console.log("App finishing rendering...");
   return (
     <>
       <header>
@@ -25,7 +30,7 @@ const App: React.FC = () => {
       </main>
       {/* Traverse through numbers 1 to 7 inclusive and print render the `TaskList` component */}
       {range(1, numDays, 1).map((i) => (
-        <TaskList key={i} tasks={data.tasks} />
+        <TaskList key={i} tasks={tasks} />
       ))}
     </>
   );
