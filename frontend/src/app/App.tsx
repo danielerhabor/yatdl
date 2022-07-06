@@ -22,8 +22,8 @@ const App: React.FC = () => {
   const data = useGetAllTasks(apiEndpoint);
   const days: Dayjs[] = getSevenDaysIncluding(new Date());
   const numDays: number = 7;
-
-  const tasks: Task[] = data.tasks.filter(isTaskInCurrentWeek);
+  const tasks: Task[] = data ? data.data : [];
+  const tasksInCurrentWeek: Task[] = tasks.filter(isTaskInCurrentWeek);
   // console.log("App finishing rendering...");
   return (
     <>
@@ -39,7 +39,7 @@ const App: React.FC = () => {
       {range(1, numDays, 1).map((dayNo) => (
         <TaskList
           key={dayNo}
-          tasks={tasks.filter(
+          tasks={tasksInCurrentWeek.filter(
             (task) => dayjs(task.created_at).isoWeekday() === dayNo
           )}
         />
