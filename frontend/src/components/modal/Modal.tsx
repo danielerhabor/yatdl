@@ -13,17 +13,16 @@ const Modal: React.FC<{
   onSave: CallableFunction;
   onClose: CallableFunction;
 }> = ({ task, onSave, onClose }) => {
-  const [description, setDescription] = useState('');
-  const [title, setTitle] = useState('');
+  const [taskState, setTaskState] = useState<Task>(task);
 
-  useEffect(() => {
-    // on mount of the modal, set the title and description
-    // of the modal to the name and description of the task
-    if (task) {
-      setDescription(task.description);
-      setTitle(task.name);
-    }
-  }, [task]);
+  // useEffect(() => {
+  //   // on mount of the modal, set the title and description
+  //   // of the modal to the name and description of the task
+  //   if (task) {
+  //     setDescription(task.description);
+  //     setTitle(task.name);
+  //   }
+  // }, [task]);
 
   const closeHandler = () => {
     // clear the title and description
@@ -33,12 +32,11 @@ const Modal: React.FC<{
   };
 
   const clearModal = () => {
-    setDescription('');
-    setTitle('');
+    setTaskState((prev) => ({ ...prev, name: '', description: '' }));
   };
 
   const saveHandler = () => {
-    onSave(title, description);
+    onSave(taskState);
   };
 
   const domModal = document.getElementById('root-modal') as HTMLElement;
@@ -47,8 +45,10 @@ const Modal: React.FC<{
       <div className={styles.modalContainer}>
         <header className="modalHeader">
           <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={taskState.name}
+            onChange={(e) =>
+              setTaskState((prev: Task) => ({ ...prev, name: e.target.value }))
+            }
             className="modalTaskName"
             placeholder="Enter task name..."
           ></input>
@@ -57,8 +57,14 @@ const Modal: React.FC<{
           </button>
         </header>
         <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={taskState.description}
+          onChange={(e) =>
+            setTaskState((prev) => {
+              console.log(e.target.value);
+              console.log(taskState);
+              return { ...prev, description: e.target.value };
+            })
+          }
           className="modalTextArea"
           placeholder="Enter task description..."
         ></textarea>
