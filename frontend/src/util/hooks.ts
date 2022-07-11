@@ -2,13 +2,35 @@
 
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 
-import axios from 'axios';
-import { Task } from '../types/types';
+import {
+  createTask,
+  deleteTask,
+  getAllTasks,
+  getTasksPerDate,
+  updateTask,
+} from './clientApi';
 
-export const useGetAllTasks = (url: string) => {
-  const res = useQuery('tasks', async () => axios.get<Task[]>(url));
+export const useRefresh = () => {
+  const queryClient = useQueryClient();
+  return (query: string) => queryClient.invalidateQueries(query);
+};
 
-  // console.log(res.data);
+export const useCreateTask = () => {
+  return useMutation(createTask, {});
+};
 
-  return res.data;
+export const useGetAllTasks = () => {
+  return useQuery('tasks', getAllTasks);
+};
+
+export const useGetTasksPerDate = (date: string) => {
+  return useQuery(['transactions', date], () => getTasksPerDate(date));
+};
+
+export const useUpdateTask = () => {
+  return useMutation(updateTask, {});
+};
+
+export const useDeleteTask = () => {
+  return useMutation(deleteTask, {});
 };

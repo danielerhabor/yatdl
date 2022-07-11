@@ -15,19 +15,8 @@ const Modal: React.FC<{
 }> = ({ task, onSave, onClose }) => {
   const [taskState, setTaskState] = useState<Task>(task);
 
-  // useEffect(() => {
-  //   // on mount of the modal, set the title and description
-  //   // of the modal to the name and description of the task
-  //   if (task) {
-  //     setDescription(task.description);
-  //     setTitle(task.name);
-  //   }
-  // }, [task]);
-
   const closeHandler = () => {
-    // clear the title and description
     clearModal();
-    // close the modal
     onClose();
   };
 
