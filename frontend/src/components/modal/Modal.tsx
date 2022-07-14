@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Task } from '../../types/types';
-
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { closeModal } from '../../features/modalSlice';
+import { useRefresh, useUpdateTask } from '../../util/hooks';
 
 import styles from './Modal.module.css';
 
@@ -13,7 +11,9 @@ const Modal: React.FC<{
   onSave: CallableFunction;
   onClose: CallableFunction;
 }> = ({ task, onSave, onClose }) => {
-  const [taskState, setTaskState] = useState<Task>(task);
+  const [modalTask, setModalTask] = useState<Task>(task);
+  const updateTask = useUpdateTask();
+  const refresh = useRefresh();
 
   const closeHandler = () => {
     clearModal();
@@ -21,11 +21,24 @@ const Modal: React.FC<{
   };
 
   const clearModal = () => {
-    setTaskState((prev) => ({ ...prev, name: '', description: '' }));
+    setModalTask((prev: Task) => ({ ...prev, name: '', description: '' }));
   };
 
-  const saveHandler = () => {
-    onSave(taskState);
+  const saveHandler = async () => {
+    updateTask
+      .mutateAsync(modalTask)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(`Axios response - ${res.statusText}`);
+          refresh(modalTask.created_at);
+          closeHandler();
+        } else {
+          console.log('something!', res);
+        }
+      })
+      .catch((err) => {
+        console.log(`Axios error - ${err}`);
+      });
   };
 
   const domModal = document.getElementById('root-modal') as HTMLElement;
@@ -34,9 +47,9 @@ const Modal: React.FC<{
       <div className={styles.modalContainer}>
         <header className="modalHeader">
           <input
-            value={taskState.name}
+            value={modalTask.name}
             onChange={(e) =>
-              setTaskState((prev: Task) => ({ ...prev, name: e.target.value }))
+              setModalTask((prev: Task) => ({ ...prev, name: e.target.value }))
             }
             className="modalTaskName"
             placeholder="Enter task name..."
@@ -46,13 +59,12 @@ const Modal: React.FC<{
           </button>
         </header>
         <textarea
-          value={taskState.description}
+          value={modalTask.description}
           onChange={(e) =>
-            setTaskState((prev) => {
-              console.log(e.target.value);
-              console.log(taskState);
-              return { ...prev, description: e.target.value };
-            })
+            setModalTask((prev: Task) => ({
+              ...prev,
+              description: e.target.value,
+            }))
           }
           className="modalTextArea"
           placeholder="Enter task description..."

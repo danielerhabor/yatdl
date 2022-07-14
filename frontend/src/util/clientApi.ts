@@ -5,6 +5,7 @@ const taskApiClient = axios.create({
   baseURL: 'http://localhost:8080/api',
   headers: {
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
   },
 });
 
@@ -16,16 +17,16 @@ export const getAllTasks = async () => {
 export const getTasksPerDate = async (date: string) => {
   const response = await taskApiClient.get<Task[]>(`/tasks/${date}`);
   return response.data;
-}
+};
 
 export const createTask = async (task: Task) => {
-  await taskApiClient.post<Task>('/tasks', task);
+  return await taskApiClient.post<Task>('/tasks', task);
 };
 
 export const updateTask = async (task: Task) => {
-  await taskApiClient.patch<Task>(`/tasks/${task.id}`, task);
+  return await taskApiClient.patch<Task>(`/tasks/${task.id}`, task);
 };
 
 export const deleteTask = async (task: Task) => {
-  await taskApiClient.delete<Task>(`/tasks/${task.id}`);
+  return await taskApiClient.delete<Task>(`/tasks/${task.id}`);
 };

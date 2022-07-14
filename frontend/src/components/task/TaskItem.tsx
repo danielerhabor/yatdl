@@ -8,29 +8,28 @@ const TaskItem: React.FC<{ task: Task }> = ({ task }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [taskState, setTaskState] = useState<Task>(task);
 
-  const handleOpen = () => {
+  const openModalHandler = () => {
     setIsModalOpen(true);
   };
 
-  const handleClose = () => {
+  const closeModalHandler = () => {
+    console.log('Closing modal....');
     setIsModalOpen(false);
+    console.log('Closed modal....');
+
   };
 
   const saveToDB = (task: Task) => {};
 
-  const handleSave = (task: Task ) => {
-    setTaskState(task);
-    setIsModalOpen(false);
-    saveToDB(task);
-  };
+
 
   return (
     <>
-      <li className={styles.taskItem} onClick={handleOpen}>
+      <li className={styles.taskItem} onClick={openModalHandler}>
          {task.id} {task.name} {task.description} {task.created_at} {task.status}
       </li>
       {isModalOpen && (
-        <Modal task={task} onClose={handleClose} onSave={handleSave} />
+        <Modal task={task} onClose={closeModalHandler} onSave={() => 0} />
       )}
     </>
   );

@@ -1,5 +1,6 @@
 import express from 'express';
 import jsonfile from 'jsonfile';
+import cors from 'cors';
 import bp from 'body-parser';
 import { Task } from './types/types';
 
@@ -12,11 +13,14 @@ const tasksPath = './db/tasks.json';
 // create a router for the prefix /api
 const apiRouter = express.Router();
 
-server.use(bp.json());
-server.use(bp.urlencoded({ extended: true }));
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
+server.use(cors());
+
 server.use('/api', apiRouter);
 
 // allow cross origin resource sharing
+apiRouter.use(cors());
 apiRouter.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
@@ -35,20 +39,21 @@ apiRouter.get('/tasks', (req, res) => {
 apiRouter.get('/tasks/:date', (req, res) => {
   const tasksData = jsonfile.readFileSync(tasksPath);
   const date = req.params.date;
-  console.log(`The date as a parameter is ${date}`);
 
   const tasks = tasksData.filter((task: Task) => task.created_at === date);
   res.send(tasks);
 });
 
-apiRouter.patch('/tasks', (req, res) => {
-  // console.log(req.body);
-  const task = req.body;
-
-  const tasksData = jsonfile.readFileSync(tasksPath);
-  tasksData.push(task);
+apiRouter.patch('/tasks/:id', (req, res) => {
+  const id = +req.params.id;
+  console.log(`id: ${id}`);  
+  console.log(req.body);
+  const task = req.body as Task;
+  let tasksData = jsonfile.readFileSync(tasksPath) as Task[];
+  tasksData = tasksData.map((t) => (t.id === task.id ? task : t));
 
   jsonfile.writeFileSync(tasksPath, tasksData);
+  res.status(200).send(task);
 });
 
 // start the Express server

@@ -12,7 +12,7 @@ import {
 
 export const useRefresh = () => {
   const queryClient = useQueryClient();
-  return (query: string) => queryClient.invalidateQueries(query);
+  return (date: string) => queryClient.invalidateQueries(['transactions', date]);
 };
 
 export const useCreateTask = () => {
