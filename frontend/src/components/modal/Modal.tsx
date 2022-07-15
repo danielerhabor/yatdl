@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { useState } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -8,9 +9,8 @@ import styles from './Modal.module.css';
 
 const Modal: React.FC<{
   task: Task;
-  onSave: CallableFunction;
   onClose: CallableFunction;
-}> = ({ task, onSave, onClose }) => {
+}> = ({ task, onClose }) => {
   const [modalTask, setModalTask] = useState<Task>(task);
   const updateTask = useUpdateTask();
   const refresh = useRefresh();
@@ -25,20 +25,20 @@ const Modal: React.FC<{
   };
 
   const saveHandler = async () => {
-    updateTask
-      .mutateAsync(modalTask)
-      .then((res) => {
-        if (res.status === 200) {
-          console.log(`Axios response - ${res.statusText}`);
-          refresh(modalTask.created_at);
-          closeHandler();
-        } else {
-          console.log('something!', res);
-        }
-      })
-      .catch((err) => {
-        console.log(`Axios error - ${err}`);
-      });
+    try {
+      const res = await updateTask.mutateAsync(modalTask);
+      if (res.status !== 200) {
+        throw new Error(`[ERROR] Response status: (${res.status})`);
+      }
+      refresh(modalTask.created_at);
+      closeHandler();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(`[AXIOS_ERROR]- ${error.message}`);
+      } else {
+        console.error(error);
+      }
+    }
   };
 
   const domModal = document.getElementById('root-modal') as HTMLElement;

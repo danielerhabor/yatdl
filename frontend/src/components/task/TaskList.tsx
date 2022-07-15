@@ -9,6 +9,7 @@ import styles from './TaskList.module.css';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { useGetTasksPerDate } from '../../util/hooks';
+import NewTaskItem from './NewTaskItem';
 dayjs.extend(isoWeek);
 
 const TaskList: React.FC<{ dayNo: number }> = ({ dayNo }) => {
@@ -23,8 +24,7 @@ const TaskList: React.FC<{ dayNo: number }> = ({ dayNo }) => {
   }
 
   if (isError) {
-    console.error(error);
-    return <div>Error: An error occured...</div>;
+    return <div>{`An error occurred - (${error})...`}</div>;
   }
   let tasks: Task[] = [];
   if (data) {
@@ -38,6 +38,7 @@ const TaskList: React.FC<{ dayNo: number }> = ({ dayNo }) => {
         {tasks.map((task: Task) => (
           <TaskItem key={task.id} task={task} />
         ))}
+        <NewTaskItem date={date.format('YYYY-MM-DD')} />
       </ul>
     </div>
   );

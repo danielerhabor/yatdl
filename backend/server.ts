@@ -46,12 +46,9 @@ apiRouter.get('/tasks/:date', (req, res) => {
 
 apiRouter.patch('/tasks/:id', (req, res) => {
   const id = +req.params.id;
-  console.log(`id: ${id}`);  
-  console.log(req.body);
   const task = req.body as Task;
   let tasksData = jsonfile.readFileSync(tasksPath) as Task[];
   tasksData = tasksData.map((t) => (t.id === task.id ? task : t));
-
   jsonfile.writeFileSync(tasksPath, tasksData);
   res.status(200).send(task);
 });
