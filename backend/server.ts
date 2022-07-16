@@ -30,6 +30,14 @@ apiRouter.use(function (req, res, next) {
   next();
 });
 
+apiRouter.post('/tasks', (req, res) => {
+  const task: Task = req.body;
+  const tasks = jsonfile.readFileSync(tasksPath);
+  tasks.push(task);
+  jsonfile.writeFileSync(tasksPath, tasks);
+  res.status(201).send(tasks);
+});
+
 apiRouter.get('/tasks', (req, res) => {
   const tasksData = jsonfile.readFileSync(tasksPath);
   console.log(tasksData);

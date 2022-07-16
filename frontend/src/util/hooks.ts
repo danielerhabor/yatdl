@@ -12,7 +12,7 @@ import {
 
 export const useRefresh = () => {
   const queryClient = useQueryClient();
-  return (date: string) => queryClient.invalidateQueries(['transactions', date]);
+  return (date: string) => queryClient.invalidateQueries(['tasks', date]);
 };
 
 export const useCreateTask = () => {
@@ -24,7 +24,7 @@ export const useGetAllTasks = () => {
 };
 
 export const useGetTasksPerDate = (date: string) => {
-  return useQuery(['transactions', date], () => getTasksPerDate(date));
+  return useQuery(['tasks', date], () => getTasksPerDate(date));
 };
 
 export const useUpdateTask = () => {
