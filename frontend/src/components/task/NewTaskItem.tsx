@@ -12,7 +12,7 @@ const NewTaskItem: React.FC<{ date: string }> = ({ date }) => {
   const blurHandler = async () => {
     // make the post request to create a task on the server with the new task name
     const newTask: Task = {
-      id: +crypto.randomUUID(),
+      id: crypto.randomUUID(),
       name: newTaskName,
       description: '',
       created_at: date,

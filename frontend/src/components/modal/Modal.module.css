@@ -16,3 +16,11 @@
   z-index: 1001;
   padding: 2rem;
 }
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: antiquewhite;
+  padding: 0.125rem 0.125rem
+}

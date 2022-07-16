@@ -35,7 +35,7 @@ apiRouter.post('/tasks', (req, res) => {
   const tasks = jsonfile.readFileSync(tasksPath);
   tasks.push(task);
   jsonfile.writeFileSync(tasksPath, tasks);
-  res.status(201).send(tasks);
+  res.status(201).send();
 });
 
 apiRouter.get('/tasks', (req, res) => {
@@ -53,12 +53,19 @@ apiRouter.get('/tasks/:date', (req, res) => {
 });
 
 apiRouter.patch('/tasks/:id', (req, res) => {
-  const id = +req.params.id;
   const task = req.body as Task;
   let tasksData = jsonfile.readFileSync(tasksPath) as Task[];
   tasksData = tasksData.map((t) => (t.id === task.id ? task : t));
   jsonfile.writeFileSync(tasksPath, tasksData);
-  res.status(200).send(task);
+  res.status(200).send();
+});
+
+apiRouter.delete('/tasks/:id', (req, res) => {
+  const id = req.params.id;
+  let tasksData = jsonfile.readFileSync(tasksPath) as Task[];
+  tasksData = tasksData.filter((t) => t.id !== id);
+  jsonfile.writeFileSync(tasksPath, tasksData);
+  res.status(204).send();
 });
 
 // start the Express server

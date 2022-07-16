@@ -3,9 +3,12 @@ import { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Task } from '../../types/types';
-import { useRefresh, useUpdateTask } from '../../util/hooks';
+import { useDeleteTask, useRefresh, useUpdateTask } from '../../util/hooks';
 
 import styles from './Modal.module.css';
+
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Modal: React.FC<{
   task: Task;
@@ -13,6 +16,7 @@ const Modal: React.FC<{
 }> = ({ task, onClose }) => {
   const [modalTask, setModalTask] = useState<Task>(task);
   const updateTask = useUpdateTask();
+  const deleteTask = useDeleteTask();
   const refresh = useRefresh();
 
   const closeHandler = () => {
@@ -41,11 +45,37 @@ const Modal: React.FC<{
     }
   };
 
+  const deleteHandler = async () => {
+    try {
+      const res = await deleteTask.mutateAsync(modalTask);
+      if (res.status !== 204) {
+        throw new Error(`[ERROR] Response status: (${res.status})`);
+      }
+      refresh(modalTask.created_at);
+      closeHandler();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(`[AXIOS_ERROR] - ${error.message}`);
+      } else {
+        console.error(error);
+      }
+    }
+  };
+
   const domModal = document.getElementById('root-modal') as HTMLElement;
   const reactModal = (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContainer}>
-        <header className="modalHeader">
+
+        <header className={styles.modalHeader}>
+          <p>{modalTask.created_at}</p>
+          <button onClick={closeHandler} className="modalCloseButton">
+            &times;
+          </button>
+
+          <button onClick={deleteHandler}><FontAwesomeIcon icon={faTrashAlt}/></button>
+        </header>
+        <div>
           <input
             value={modalTask.name}
             onChange={(e) =>
@@ -54,10 +84,8 @@ const Modal: React.FC<{
             className="modalTaskName"
             placeholder="Enter task name..."
           ></input>
-          <button onClick={closeHandler} className="modalCloseButton">
-            &times;
-          </button>
-        </header>
+        </div>
+
         <textarea
           value={modalTask.description}
           onChange={(e) =>
