@@ -1,8 +1,9 @@
 import express from 'express';
 import jsonfile from 'jsonfile';
 import cors from 'cors';
-import bp from 'body-parser';
 import { Task } from './types/types';
+// import { AppDataSource } from './db.js';
+import { defaultPostgresDB } from './db';
 
 const server = express();
 
@@ -71,4 +72,35 @@ apiRouter.delete('/tasks/:id', (req, res) => {
 // start the Express server
 server.listen(PORT, () => {
   console.log(`server started at http://localhost:${PORT}...`);
+
+  const DB_NAME = 'HELLO_DB';
+  defaultPostgresDB
+    .initialize()
+    .then((d) => {
+      console.log('Default database initialized...');
+      d.manager.connection
+        .createQueryRunner()
+        .createDatabase(DB_NAME, true)
+        .then(() => {
+          console.log(`${DB_NAME} database created successfully...`);
+        })
+        .catch((err) => {
+          console.log(
+            `An error occurred trying to create database ${DB_NAME}...\n${err}`
+          );
+        });
+    })
+    .catch((error) =>
+      console.log(
+        `An error occurred on default database intitalization...\n${error}`
+      )
+    );
+
+  // AppDataSource.initialize()
+  //   .then((ds) => {
+  //     console.log('Database initialized...');
+  //   })
+  //   .catch((error) =>
+  //     console.log(`An error occurred on database intitalization...\n${error}`)
+  //   );
 });
