@@ -1,7 +1,8 @@
+// import 'reflect-metadata';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import dotenv from 'dotenv';
-import { Todo } from './models/Todo';
-import { Pomodoro } from './models/Pomodoro';
+import { TodoDB } from './models/Todo';
+import { PomodoroDB } from './models/Pomodoro';
 
 const config = dotenv.config();
 if (config.error) {
@@ -28,26 +29,27 @@ const createDB = async (dbName: string) => {
     const db = await bootstrap.manager.connection
       .createQueryRunner()
       .createDatabase(dbName, true);
-    console.log(`[SUCCESS] - Database ${dbName} created...`);
+    console.log(`[Database ${dbName} created...`);
   } catch (error) {
-    console.log(`[ERROR] - ${error}`);
+    console.log(error);
   }
 };
 
 const connectToDB = async () => {
   const dbName = process.env.DB_NAME as string;
   await createDB(dbName);
-  const db = new DataSource({
+  let db = new DataSource({
     ...bootstrapDBConfig,
     database: dbName,
-    entities: [Todo, Pomodoro],
+    entities: [TodoDB, PomodoroDB],
     synchronize: true,
   });
+
   try {
-    await db.initialize();
-    console.log(`[SUCCESS] - Connected to database ${dbName}...`);
+    db = await db.initialize();
+    console.log(`Database ${dbName} initialized...`);
   } catch (error) {
-    console.log(`[ERROR] - ${error}`);
+    console.log(error); 
   }
   return db;
 };

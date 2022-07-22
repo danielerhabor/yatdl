@@ -12,11 +12,8 @@ const NewTodoItem: React.FC<{ date: string }> = ({ date }) => {
   const blurHandler = async () => {
     // make the post request to create a todo on the server with the new todo name
     const newTodo: TodoUI = {
-      key: crypto.randomUUID(),
       name: newTodoName,
-      description: '',
       scheduled: date,
-      status: Status.TODO,
     };
     try {
       const res = await createTodo.mutateAsync(newTodo);
@@ -26,11 +23,7 @@ const NewTodoItem: React.FC<{ date: string }> = ({ date }) => {
       refresh(newTodo.scheduled);
       setNewTodoName(''); // triggers a re-render of the entire component
     } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(`[AXIOS_ERROR] - ${error.message}`);
-      } else {
-        console.error(error);
-      }
+      console.error(error);
     }
   };
 

@@ -3,7 +3,6 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import {
   createTodo,
   deleteTodo,
-  getAllTodos,
   getTodosPerDate,
   updateTodo,
 } from './clientApi';
@@ -15,10 +14,6 @@ export const useRefresh = () => {
 
 export const useCreateTodo = () => {
   return useMutation(createTodo, {});
-};
-
-export const useGetAllTodos = () => {
-  return useQuery('todos', getAllTodos);
 };
 
 export const useGetTodosPerDate = (date: string) => {

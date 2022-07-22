@@ -1,63 +1,69 @@
-import { DataSource } from 'typeorm';
-import { connectToDB } from '../db';
-import { Todo } from '../models/Todo';
+// import 'reflect-metadata';
+import { Repository } from 'typeorm';
+import { TodoDB } from '../models/Todo';
 import { TodoUI } from '../types/types';
+import dayjs from 'dayjs';
 
-let db: DataSource | undefined;
-
-connectToDB().then((data) => {
-  db = data;
-});
-
-if (db === null) {
-  throw new Error('DB is not initialized');
-}
-
-const todoRepositoroy = db!.getRepository(Todo);
-
-const createTodo = async (todo: TodoUI) => {
-  const newTodo = new Todo();
+export const createTodo = async (
+  todo: TodoUI,
+  todoRepo: Repository<TodoDB>
+) => {
+  const newTodo = new TodoDB();
   newTodo.name = todo.name;
-  newTodo.description = todo.description;
-  newTodo.scheduled = new Date(todo.scheduled);
-  newTodo.status = todo.status;
-  await todoRepositoroy.save(newTodo);
-  return newTodo.id;
-}
+  newTodo.scheduled = dayjs(todo.scheduled).toDate();
+  await todoRepo.save(newTodo);
 
-const getTodosPerDate = async (date: Date) => {
-  let todos = await todoRepositoroy.find({
+  return {
+    key: newTodo.id,
+    name: newTodo.name,
+    description: newTodo.description,
+    scheduled: newTodo.scheduled.toISOString(),
+    status: newTodo.status,
+  } as TodoUI;
+};
+
+export const getTodosPerDate = async (
+  date: dayjs.Dayjs,
+  todoRepo: Repository<TodoDB>
+) => {
+  let todos = await todoRepo.find({
     where: {
-      scheduled: date,
+      scheduled: date.toDate(),
     },
   });
+  let todosPerDate: TodoUI[] = [];
+  todos.forEach((todo) => {
+    todosPerDate.push({
+      key: todo.id,
+      name: todo.name,
+      description: todo.description,
+      scheduled: todo.scheduled.toISOString(),
+      status: todo.status,
+    });
+  });
+  return todosPerDate;
+};
 
-  // return todos.map((todo: Todo) => {{todo.description, todo.id, todo.name, todo.} as TodoUI };);
-}
-
-
-const updateTodo = async (todo: TodoUI) => {
-  const newTodo = new Todo();
+export const updateTodo = async (
+  todo: TodoUI,
+  todoRepo: Repository<TodoDB>
+) => {
+  const foundTodo = await todoRepo.findOneBy({
+    id: todo.key,
+  });
+  const newTodo = new TodoDB();
   newTodo.name = todo.name;
   newTodo.description = todo.description;
-  newTodo.scheduled = new Date(todo.scheduled);
+  newTodo.scheduled = new dayjs.Dayjs(todo.scheduled).toDate();
   newTodo.status = todo.status;
-
-  await todoRepositoroy.save(newTodo);
+  await todoRepo.save(newTodo);
   return newTodo.id;
-}
+};
 
-const deleteTodo = async (id: number) => {
-  const todo = await todoRepositoroy.findOneBy({id: id});
+export const deleteTodo = async (id: number, todoRepo: Repository<TodoDB>) => {
+  const todo = await todoRepo.findOneBy({ id: id });
   if (todo == null) {
-    return false
+    return false;
   }
-  todoRepositoroy.remove(todo);
-  
-}
-
-
-
-
-
-
+  todoRepo.remove(todo);
+};

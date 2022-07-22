@@ -9,11 +9,6 @@ const todoApiClient = axios.create({
   },
 });
 
-export const getAllTodos = async () => {
-  const response = await todoApiClient.get<TodoUI[]>('/todos');
-  return response.data;
-};
-
 export const getTodosPerDate = async (date: string) => {
   const response = await todoApiClient.get<TodoUI[]>(`/todos/${date}`);
   return response.data;

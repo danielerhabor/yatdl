@@ -1,15 +1,10 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-} from 'typeorm';
-
+// import 'reflect-metadata';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Status } from '../types/types';
-import { Todo } from './Todo';
+import { TodoDB } from './Todo';
 
 @Entity()
-export class Pomodoro {
+export class PomodoroDB {
   @PrimaryGeneratedColumn('increment')
   id!: number;
 
@@ -25,7 +20,7 @@ export class Pomodoro {
   @Column()
   status!: Status;
 
-  @Column()
-  @ManyToOne((type) => Todo, (todo) => todo.pomodoros)
-  todo!: Todo;
+  @Column('text')
+  @ManyToOne((type) => TodoDB, (todo) => todo.pomodoros, )
+  todo!: TodoDB;
 }
