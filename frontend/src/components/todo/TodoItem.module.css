@@ -1,11 +1,11 @@
-.taskItem {
+.todoItem {
   list-style-type: none;
   background-color: aliceblue;
   border-radius: 1rem;
   margin: 0.25rem;
 }
 
-.taskItem:hover {
+.todoItem:hover {
   background-color: #f0f0f0;
   cursor: pointer;
 }

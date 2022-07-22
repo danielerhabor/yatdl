@@ -1,9 +1,8 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './app/App';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import App from './app/App';
+import './index.css';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';

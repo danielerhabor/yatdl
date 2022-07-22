@@ -2,8 +2,8 @@ import { AxiosError } from 'axios';
 import { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import { Task } from '../../types/types';
-import { useDeleteTask, useRefresh, useUpdateTask } from '../../util/hooks';
+import { TodoUI } from '../../types/types';
+import { useDeleteTodo, useRefresh, useUpdateTodo } from '../../util/hooks';
 
 import styles from './Modal.module.css';
 
@@ -11,12 +11,12 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Modal: React.FC<{
-  task: Task;
+  todo: TodoUI;
   onClose: CallableFunction;
-}> = ({ task, onClose }) => {
-  const [modalTask, setModalTask] = useState<Task>(task);
-  const updateTask = useUpdateTask();
-  const deleteTask = useDeleteTask();
+}> = ({ todo, onClose }) => {
+  const [modalTodo, setModalTodo] = useState<TodoUI>(todo);
+  const updateTodo = useUpdateTodo();
+  const deleteTodo = useDeleteTodo();
   const refresh = useRefresh();
 
   const closeHandler = () => {
@@ -25,16 +25,16 @@ const Modal: React.FC<{
   };
 
   const clearModal = () => {
-    setModalTask((prev: Task) => ({ ...prev, name: '', description: '' }));
+    setModalTodo((prev: TodoUI) => ({ ...prev, name: '', description: '' }));
   };
 
   const saveHandler = async () => {
     try {
-      const res = await updateTask.mutateAsync(modalTask);
+      const res = await updateTodo.mutateAsync(modalTodo);
       if (res.status !== 200) {
         throw new Error(`[ERROR] Response status: (${res.status})`);
       }
-      refresh(modalTask.created_at);
+      refresh(modalTodo.scheduled);
       closeHandler();
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -47,11 +47,11 @@ const Modal: React.FC<{
 
   const deleteHandler = async () => {
     try {
-      const res = await deleteTask.mutateAsync(modalTask);
+      const res = await deleteTodo.mutateAsync(modalTodo);
       if (res.status !== 204) {
         throw new Error(`[ERROR] Response status: (${res.status})`);
       }
-      refresh(modalTask.created_at);
+      refresh(modalTodo.scheduled);
       closeHandler();
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -68,7 +68,7 @@ const Modal: React.FC<{
       <div className={styles.modalContainer}>
 
         <header className={styles.modalHeader}>
-          <p>{modalTask.created_at}</p>
+          <p>{modalTodo.scheduled}</p>
           <button onClick={closeHandler} className="modalCloseButton">
             &times;
           </button>
@@ -77,25 +77,25 @@ const Modal: React.FC<{
         </header>
         <div>
           <input
-            value={modalTask.name}
+            value={modalTodo.name}
             onChange={(e) =>
-              setModalTask((prev: Task) => ({ ...prev, name: e.target.value }))
+              setModalTodo((prev: TodoUI) => ({ ...prev, name: e.target.value }))
             }
-            className="modalTaskName"
-            placeholder="Enter task name..."
+            className="modalTodoName"
+            placeholder="Enter todo name..."
           ></input>
         </div>
 
         <textarea
-          value={modalTask.description}
+          value={modalTodo.description}
           onChange={(e) =>
-            setModalTask((prev: Task) => ({
+            setModalTodo((prev: TodoUI) => ({
               ...prev,
               description: e.target.value,
             }))
           }
           className="modalTextArea"
-          placeholder="Enter task description..."
+          placeholder="Enter todo description..."
         ></textarea>
         <footer className="modalFooter">
           <button onClick={saveHandler} className="modalSaveButton">

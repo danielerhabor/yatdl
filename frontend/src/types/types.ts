@@ -6,10 +6,11 @@ export enum Status {
   RESCHEDULED = 'rescheduled',
 }
 
-export type Task = {
-  id: string;
+export interface TodoUI {
+  key?: string;
   name: string;
   description: string;
-  created_at: string;
+  scheduled: string;
   status: Status;
-};
+}
+

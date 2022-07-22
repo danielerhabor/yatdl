@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Task } from '../types/types';
+import { TodoUI } from '../types/types';
 
-const taskApiClient = axios.create({
+const todoApiClient = axios.create({
   baseURL: 'http://localhost:8080/api',
   headers: {
     'Content-Type': 'application/json',
@@ -9,24 +9,24 @@ const taskApiClient = axios.create({
   },
 });
 
-export const getAllTasks = async () => {
-  const response = await taskApiClient.get<Task[]>('/tasks');
+export const getAllTodos = async () => {
+  const response = await todoApiClient.get<TodoUI[]>('/todos');
   return response.data;
 };
 
-export const getTasksPerDate = async (date: string) => {
-  const response = await taskApiClient.get<Task[]>(`/tasks/${date}`);
+export const getTodosPerDate = async (date: string) => {
+  const response = await todoApiClient.get<TodoUI[]>(`/todos/${date}`);
   return response.data;
 };
 
-export const createTask = async (task: Task) => {
-  return await taskApiClient.post<Task>('/tasks', task);
+export const createTodo = async (todo: TodoUI) => {
+  return await todoApiClient.post<TodoUI>('/todos', todo);
 };
 
-export const updateTask = async (task: Task) => {
-  return await taskApiClient.patch<Task>(`/tasks/${task.id}`, task);
+export const updateTodo = async (todo: TodoUI) => {
+  return await todoApiClient.patch<TodoUI>(`/todos/${todo.key}`, todo);
 };
 
-export const deleteTask = async (task: Task) => {
-  return await taskApiClient.delete<Task>(`/tasks/${task.id}`);
+export const deleteTodo = async (todo: TodoUI) => {
+  return await todoApiClient.delete<TodoUI>(`/todos/${todo.key}`);
 };

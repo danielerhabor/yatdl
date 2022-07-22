@@ -6,10 +6,13 @@ export enum Status {
   RESCHEDULED = 'rescheduled',
 }
 
+
 export interface TodoUI {
-  key: string;
+  key?: string;
   name: string;
   description: string;
   scheduled: string;
   status: Status;
 }
+
+

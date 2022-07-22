@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
-import { Task } from '../types/types';
+import { TodoUI } from '../types/types';
 
 dayjs.extend(isoWeek); // Week starts from Monday at 1 to Sunday at 7
 
@@ -29,14 +29,14 @@ export const getSevenDaysIncluding = (date: Date): Dayjs[] => {
 };
 
 /**
- * Given a `task`, return true if the task is
+ * Given a `todo`, return true if the todo is
  * in the current week, false otherwise
- * @param task
+ * @param todo
  */
-export const isTaskInCurrentWeek = (task: Task): boolean => {
+export const isTaskInCurrentWeek = (todo: TodoUI): boolean => {
   // get the dates from Monday to Sunday that are in the current week
   // console.log(task);
   const sevenDays = getSevenDaysIncluding(new Date());
   // console.log(sevenDays);
-  return sevenDays.some((day) => day.isSame(dayjs(task.created_at), 'day'));
+  return sevenDays.some((day) => day.isSame(dayjs(todo.scheduled), 'day'));
 };

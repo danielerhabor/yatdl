@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Task } from '../types/types';
+import { TodoUI } from '../types/types';
 
 interface ModalState {
   isOpen: boolean;
-  task?: Task;
+  todo?: TodoUI;
 }
 
 const initialState: ModalState = {
@@ -20,15 +20,15 @@ const modalSlice = createSlice({
     closeModal: (state) => {
       state.isOpen = false;
     },
-    openModalWithTask: (state, action: PayloadAction<Task>) => {
+    openModalWithTodo: (state, action: PayloadAction<TodoUI>) => {
       state.isOpen = true;
-      state.task = action.payload;
+      state.todo = action.payload;
     }
   },
 });
 
 // export the typed reducer and the typed actions
-export const { openModal, closeModal, openModalWithTask } = modalSlice.actions;
+export const { openModal, closeModal, openModalWithTodo } = modalSlice.actions;
 export default modalSlice.reducer;
 
 

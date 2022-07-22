@@ -1,36 +1,34 @@
-// import react query
-
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 import {
-  createTask,
-  deleteTask,
-  getAllTasks,
-  getTasksPerDate,
-  updateTask,
+  createTodo,
+  deleteTodo,
+  getAllTodos,
+  getTodosPerDate,
+  updateTodo,
 } from './clientApi';
 
 export const useRefresh = () => {
   const queryClient = useQueryClient();
-  return (date: string) => queryClient.invalidateQueries(['tasks', date]);
+  return (date: string) => queryClient.invalidateQueries(['todos', date]);
 };
 
-export const useCreateTask = () => {
-  return useMutation(createTask, {});
+export const useCreateTodo = () => {
+  return useMutation(createTodo, {});
 };
 
-export const useGetAllTasks = () => {
-  return useQuery('tasks', getAllTasks);
+export const useGetAllTodos = () => {
+  return useQuery('todos', getAllTodos);
 };
 
-export const useGetTasksPerDate = (date: string) => {
-  return useQuery(['tasks', date], () => getTasksPerDate(date));
+export const useGetTodosPerDate = (date: string) => {
+  return useQuery(['todos', date], () => getTodosPerDate(date));
 };
 
-export const useUpdateTask = () => {
-  return useMutation(updateTask, {});
+export const useUpdateTodo = () => {
+  return useMutation(updateTodo, {});
 };
 
-export const useDeleteTask = () => {
-  return useMutation(deleteTask, {});
+export const useDeleteTodo = () => {
+  return useMutation(deleteTodo, {});
 };

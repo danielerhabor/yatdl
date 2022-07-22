@@ -1,15 +1,18 @@
 import express from 'express';
 import jsonfile from 'jsonfile';
 import cors from 'cors';
-import { Task } from './types/types';
+import { TodoUI } from './types/types';
+
+import { Todo } from './models/Todo';
+
 // import { AppDataSource } from './db.js';
-import { defaultPostgresDB } from './db';
+// import { bootstrapDB } from './db';
 
 const server = express();
 
 const PORT = 8080; // default port to listen
 
-const tasksPath = './db/tasks.json';
+const todosPath = './db/todos.json';
 
 // create a router for the prefix /api
 const apiRouter = express.Router();
@@ -31,76 +34,46 @@ apiRouter.use(function (req, res, next) {
   next();
 });
 
-apiRouter.post('/tasks', (req, res) => {
-  const task: Task = req.body;
-  const tasks = jsonfile.readFileSync(tasksPath);
-  tasks.push(task);
-  jsonfile.writeFileSync(tasksPath, tasks);
+apiRouter.post('/todos', (req, res) => {
+  const todo: TodoUI = req.body;
+  const todos = jsonfile.readFileSync(todosPath);
+  todos.push(todo);
+  jsonfile.writeFileSync(todosPath, todos);
   res.status(201).send();
 });
 
-apiRouter.get('/tasks', (req, res) => {
-  const tasksData = jsonfile.readFileSync(tasksPath);
-  console.log(tasksData);
-  res.send(tasksData);
+apiRouter.get('/todos', (req, res) => {
+  const todosData = jsonfile.readFileSync(todosPath);
+  console.log(todosData);
+  res.send(todosData);
 });
 
-apiRouter.get('/tasks/:date', (req, res) => {
-  const tasksData = jsonfile.readFileSync(tasksPath);
+apiRouter.get('/todos/:date', (req, res) => {
+  const todosData = jsonfile.readFileSync(todosPath);
   const date = req.params.date;
-
-  const tasks = tasksData.filter((task: Task) => task.created_at === date);
-  res.send(tasks);
+  const todos = todosData.filter(
+    (todo: TodoUI) => todo.scheduled === date
+  );
+  res.send(todos);
 });
 
-apiRouter.patch('/tasks/:id', (req, res) => {
-  const task = req.body as Task;
-  let tasksData = jsonfile.readFileSync(tasksPath) as Task[];
-  tasksData = tasksData.map((t) => (t.id === task.id ? task : t));
-  jsonfile.writeFileSync(tasksPath, tasksData);
+apiRouter.patch('/todos/:key', (req, res) => {
+  const todo = req.body as TodoUI;
+  let todosData = jsonfile.readFileSync(todosPath) as TodoUI[];
+  todosData = todosData.map((t) => (t.key === todo.key ? todo : t));
+  jsonfile.writeFileSync(todosPath, todosData);
   res.status(200).send();
 });
 
-apiRouter.delete('/tasks/:id', (req, res) => {
-  const id = req.params.id;
-  let tasksData = jsonfile.readFileSync(tasksPath) as Task[];
-  tasksData = tasksData.filter((t) => t.id !== id);
-  jsonfile.writeFileSync(tasksPath, tasksData);
+apiRouter.delete('/todos/:key', (req, res) => {
+  const key = req.params.key;
+  let todosData = jsonfile.readFileSync(todosPath) as TodoUI[];
+  todosData = todosData.filter((t) => t.key !== key);
+  jsonfile.writeFileSync(todosPath, todosData);
   res.status(204).send();
 });
 
 // start the Express server
 server.listen(PORT, () => {
   console.log(`server started at http://localhost:${PORT}...`);
-
-  const DB_NAME = 'HELLO_DB';
-  defaultPostgresDB
-    .initialize()
-    .then((d) => {
-      console.log('Default database initialized...');
-      d.manager.connection
-        .createQueryRunner()
-        .createDatabase(DB_NAME, true)
-        .then(() => {
-          console.log(`${DB_NAME} database created successfully...`);
-        })
-        .catch((err) => {
-          console.log(
-            `An error occurred trying to create database ${DB_NAME}...\n${err}`
-          );
-        });
-    })
-    .catch((error) =>
-      console.log(
-        `An error occurred on default database intitalization...\n${error}`
-      )
-    );
-
-  // AppDataSource.initialize()
-  //   .then((ds) => {
-  //     console.log('Database initialized...');
-  //   })
-  //   .catch((error) =>
-  //     console.log(`An error occurred on database intitalization...\n${error}`)
-  //   );
 });
