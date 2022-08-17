@@ -1,4 +1,3 @@
-// import 'reflect-metadata';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import dotenv from 'dotenv';
 import { TodoDB } from './models/Todo';

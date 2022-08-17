@@ -30,18 +30,15 @@ const Modal: React.FC<{
 
   const saveHandler = async () => {
     try {
+      console.log(modalTodo);
       const res = await updateTodo.mutateAsync(modalTodo);
-      if (res.status !== 200) {
-        throw new Error(`[ERROR] Response status: (${res.status})`);
+      if (res.status !== 204) {
+        throw new Error(`Response status: (${res.status})`);
       }
-      refresh(modalTodo.scheduled);
+      await refresh(modalTodo.scheduled);
       closeHandler();
     } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(`[AXIOS_ERROR]- ${error.message}`);
-      } else {
-        console.error(error);
-      }
+      console.error(error);
     }
   };
 
@@ -66,20 +63,24 @@ const Modal: React.FC<{
   const reactModal = (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContainer}>
-
         <header className={styles.modalHeader}>
           <p>{modalTodo.scheduled}</p>
           <button onClick={closeHandler} className="modalCloseButton">
             &times;
           </button>
 
-          <button onClick={deleteHandler}><FontAwesomeIcon icon={faTrashAlt}/></button>
+          <button onClick={deleteHandler}>
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </button>
         </header>
         <div>
           <input
             value={modalTodo.name}
             onChange={(e) =>
-              setModalTodo((prev: TodoUI) => ({ ...prev, name: e.target.value }))
+              setModalTodo((prev: TodoUI) => ({
+                ...prev,
+                name: e.target.value,
+              }))
             }
             className="modalTodoName"
             placeholder="Enter todo name..."

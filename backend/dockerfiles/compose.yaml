@@ -34,11 +34,31 @@ services:
     networks:
       - db_network
 
+  mongo_service:
+    hostname: mongo
+    container_name: mongo_container
+    build:
+      context: .
+      dockerfile: mongo.Dockerfile
+    image: mongo_image
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=admin
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_volume:/data/db
+    networks:
+      - db_network
 volumes:
   pgadmin4_volume:
     name: "pgadmin4_volume"
   postgres_volume:
     name: "postgres_volume"
+  mongo_volume:
+    name: "mongo_volume"
 
 networks:
   db_network:

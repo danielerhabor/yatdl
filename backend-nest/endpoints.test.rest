@@ -1,0 +1,11 @@
+###
+POST http://localhost:3000/todos HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Test todo 1",
+  "scheduled": "2022-08-17"
+}
+
+###
+GET http://localhost:3000/todos/2022-08-17 HTTP/1.1

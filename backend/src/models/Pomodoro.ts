@@ -1,4 +1,3 @@
-// import 'reflect-metadata';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Status } from '../types/types';
 import { TodoDB } from './Todo';

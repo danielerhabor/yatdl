@@ -18,7 +18,7 @@ const TodoItem: React.FC<{ todo: TodoUI }> = ({ todo }) => {
   return (
     <>
       <li className={styles.todoItem} onClick={openModalHandler}>
-        {todo.key} {todo.name} {todo.description} {todo.scheduled} {todo.status}
+        {todo.name} {todo.description} {todo.scheduled} {todo.status}
       </li>
       {isModalOpen && <Modal todo={todo} onClose={closeModalHandler} />}
     </>

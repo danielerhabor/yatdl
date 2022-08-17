@@ -1,14 +1,12 @@
 export enum Status {
-  TODO = 'todo',
-  DOING = 'doing',
-  DONE = 'done',
-  INCOMPLETE = 'incomplete',
-  RESCHEDULED = 'rescheduled',
+  TODO = 'TODO',
+  DOING = 'DOING',
+  DONE = 'DONE',
 }
 
 export interface TodoUI {
   key?: number;
-  name: string;
+  title: string;
   description?: string;
   scheduled: string;
   status?: Status;
