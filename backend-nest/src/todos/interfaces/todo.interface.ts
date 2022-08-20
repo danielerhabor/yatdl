@@ -1,7 +1,8 @@
 import { Status } from '../enums/todo.status.enum';
+import Todo from '@prisma/client';
 
 export interface ITodo {
-  keyOrId?: number;
+  id?: number;
   title: string;
   description?: string;
   scheduled: string;

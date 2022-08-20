@@ -4,10 +4,10 @@ export enum Status {
   DONE = 'DONE',
 }
 
-export interface TodoUI {
-  key?: number;
-  title: string;
+export class TodoUI {
+  id?: number;
+  title!: string;
   description?: string;
-  scheduled: string;
+  scheduled!: string;
   status?: Status;
 }

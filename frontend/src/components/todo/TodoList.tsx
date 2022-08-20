@@ -28,7 +28,14 @@ const TodoList: React.FC<{ dayNo: number }> = ({ dayNo }) => {
   }
   let todos: TodoUI[] = [];
   if (data) {
-    todos = data;
+    todos = data.map((todo) => {
+      const date = todo.scheduled.split('T')[0];
+
+      return {
+        ...todo,
+        scheduled: date,
+      };
+    });
   }
 
   return (
@@ -36,7 +43,7 @@ const TodoList: React.FC<{ dayNo: number }> = ({ dayNo }) => {
       <h2>{date.format('dddd')}</h2>
       <ul>
         {todos.map((todo: TodoUI) => (
-          <TodoItem key={todo.key} todo={todo} />
+          <TodoItem key={todo.id} todo={todo} />
         ))}
         <NewTodoItem date={date.format('YYYY-MM-DD')} />
       </ul>

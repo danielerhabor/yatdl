@@ -30,11 +30,11 @@ export class TodosController {
 
   @Patch(':id')
   async update(@Param('id') id: number, @Body() updateTodoDto: UpdateTodoDto) {
-    return await this.todosService.update(+id, updateTodoDto);
+    return await this.todosService.update(id, updateTodoDto);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: number) {
-    return await this.todosService.remove(+id);
+    return await this.todosService.remove(id);
   }
 }

@@ -6,7 +6,7 @@ import './index.css';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-
+import 'reflect-metadata';
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(

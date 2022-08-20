@@ -4,23 +4,20 @@ import { useRefresh, useCreateTodo } from '../../util/hooks';
 import styles from './NewTodoItem.module.css';
 
 const NewTodoItem: React.FC<{ date: string }> = ({ date }) => {
-  const [newTodoName, setNewTodoName] = useState<string>('');
-  const createTodo = useCreateTodo();
+  const [newTodoTitle, setNewTodoTitle] = useState<string>('');
   const refresh = useRefresh();
+  const createTodo = useCreateTodo();
 
   const blurHandler = async () => {
     // make the post request to create a todo on the server with the new todo name
     const newTodo: TodoUI = {
-      name: newTodoName,
+      title: newTodoTitle,
       scheduled: date,
     };
     try {
-      const res = await createTodo.mutateAsync(newTodo);
-      if (res.status !== 201) {
-        throw new Error(`Response status: (${res.status})`);
-      }
-      await refresh(newTodo.scheduled);
-      setNewTodoName(''); // triggers a re-render of the entire component
+      await createTodo.mutateAsync(newTodo);
+      await refresh(date);
+      setNewTodoTitle(''); // triggers a re-render of the entire component
     } catch (error) {
       console.error(error);
     }
@@ -28,13 +25,12 @@ const NewTodoItem: React.FC<{ date: string }> = ({ date }) => {
 
   return (
     <input
-      value={newTodoName}
+      value={newTodoTitle}
       onBlur={() => {
-        newTodoName && blurHandler();
+        newTodoTitle && blurHandler();
       }} // if the input field is not empty, blurHandler is called
-      onChange={(e) => setNewTodoName(e.target.value)}
+      onChange={(e) => setNewTodoTitle(e.target.value)}
       className={styles.newTodoItem}
-      name="newTodoItem"
     ></input>
   );
 };

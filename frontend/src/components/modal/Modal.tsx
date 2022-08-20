@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { useState } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -15,9 +14,9 @@ const Modal: React.FC<{
   onClose: CallableFunction;
 }> = ({ todo, onClose }) => {
   const [modalTodo, setModalTodo] = useState<TodoUI>(todo);
+  const refresh = useRefresh();
   const updateTodo = useUpdateTodo();
   const deleteTodo = useDeleteTodo();
-  const refresh = useRefresh();
 
   const closeHandler = () => {
     clearModal();
@@ -25,16 +24,12 @@ const Modal: React.FC<{
   };
 
   const clearModal = () => {
-    setModalTodo((prev: TodoUI) => ({ ...prev, name: '', description: '' }));
+    setModalTodo((prev: TodoUI) => ({ ...prev, title: '', description: '' }));
   };
 
   const saveHandler = async () => {
     try {
-      console.log(modalTodo);
-      const res = await updateTodo.mutateAsync(modalTodo);
-      if (res.status !== 204) {
-        throw new Error(`Response status: (${res.status})`);
-      }
+      await updateTodo.mutateAsync(modalTodo);
       await refresh(modalTodo.scheduled);
       closeHandler();
     } catch (error) {
@@ -44,18 +39,11 @@ const Modal: React.FC<{
 
   const deleteHandler = async () => {
     try {
-      const res = await deleteTodo.mutateAsync(modalTodo);
-      if (res.status !== 204) {
-        throw new Error(`[ERROR] Response status: (${res.status})`);
-      }
-      refresh(modalTodo.scheduled);
+      await deleteTodo.mutateAsync(modalTodo);
+      await refresh(modalTodo.scheduled);
       closeHandler();
     } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(`[AXIOS_ERROR] - ${error.message}`);
-      } else {
-        console.error(error);
-      }
+      console.error(error);
     }
   };
 
@@ -65,25 +53,24 @@ const Modal: React.FC<{
       <div className={styles.modalContainer}>
         <header className={styles.modalHeader}>
           <p>{modalTodo.scheduled}</p>
-          <button onClick={closeHandler} className="modalCloseButton">
+          <button onClick={() => closeHandler()} className="modalCloseButton">
             &times;
           </button>
 
-          <button onClick={deleteHandler}>
+          <button onClick={() => deleteHandler()}>
             <FontAwesomeIcon icon={faTrashAlt} />
           </button>
         </header>
         <div>
           <input
-            value={modalTodo.name}
+            value={modalTodo.title}
             onChange={(e) =>
               setModalTodo((prev: TodoUI) => ({
                 ...prev,
-                name: e.target.value,
+                title: e.target.value,
               }))
             }
-            className="modalTodoName"
-            placeholder="Enter todo name..."
+            placeholder="Enter todo title..."
           ></input>
         </div>
 
@@ -95,16 +82,11 @@ const Modal: React.FC<{
               description: e.target.value,
             }))
           }
-          className="modalTextArea"
           placeholder="Enter todo description..."
         ></textarea>
-        <footer className="modalFooter">
-          <button onClick={saveHandler} className="modalSaveButton">
-            Save
-          </button>
-          <button onClick={closeHandler} className="modalCancelbutton">
-            Cancel
-          </button>
+        <footer>
+          <button onClick={saveHandler}>Save</button>
+          <button onClick={closeHandler}>Cancel</button>
         </footer>
       </div>
     </div>
