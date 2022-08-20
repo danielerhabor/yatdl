@@ -50,7 +50,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - ./backend-nest:/home/node/yatdl/backend-nest
+      - ./backend:/home/node/yatdl/backend
     networks:
       - yatdl
 volumes:
