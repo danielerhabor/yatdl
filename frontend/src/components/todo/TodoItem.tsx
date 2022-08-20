@@ -6,7 +6,7 @@ import Modal from '../modal/Modal';
 
 const TodoItem: React.FC<{ todo: TodoUI }> = ({ todo }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  
+
   const openModalHandler = () => {
     setIsModalOpen(true);
   };
@@ -18,7 +18,7 @@ const TodoItem: React.FC<{ todo: TodoUI }> = ({ todo }) => {
   return (
     <>
       <li className={styles.todoItem} onClick={openModalHandler}>
-        {todo.key} {todo.name} {todo.description} {todo.scheduled} {todo.status}
+        {todo.title} {todo.description} {todo.scheduled} {todo.status}
       </li>
       {isModalOpen && <Modal todo={todo} onClose={closeModalHandler} />}
     </>

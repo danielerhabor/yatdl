@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  TODO
+  DOING
+  DONE
+}
+
+model Todo {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String?    @default("")
+  scheduled   DateTime
+  status      Status     @default(TODO)
+  pomodoros   Pomodoro[]
+}
+
+model Pomodoro {
+  id       Int      @id @default(autoincrement())
+  start    DateTime
+  duration Int
+  end      DateTime
+  todo     Todo     @relation(fields: [todoId], references: [id])
+  todoId   Int
+}

@@ -3,7 +3,7 @@ import express from 'express';
 import jsonfile from 'jsonfile';
 import cors from 'cors';
 import { TodoUI } from './types/types';
-import { createTodo, getTodosPerDate } from './libs/db';
+import { createTodo, getTodosPerDate, updateTodo } from './libs/db';
 import dayjs from 'dayjs';
 import { connectToDB } from './db';
 import { DataSource } from 'typeorm';
@@ -39,46 +39,42 @@ connectToDB()
     const todoRepo = dataSource.getRepository(TodoDB);
     apiRouter.post('/todos', (req, res) => {
       const todo: TodoUI = req.body;
-      // const todos = jsonfile.readFileSync(todosPath);
-      // todos.push(todo);
-      // jsonfile.writeFileSync(todosPath, todos);
       createTodo(todo, todoRepo)
-        .then((todo) => {
-          res.status(201).send(todo);
+        .then(() => {
+          res.status(201).send();
         })
-        .catch((err) => {
-          res.status(500).send({ error: err });
+        .catch((error) => {
+          res.status(500).send({ error });
         });
     });
 
-    apiRouter.get('/todos', (req, res) => {
-      const todosData = jsonfile.readFileSync(todosPath);
-      console.log(todosData);
-      res.send(todosData);
-    });
-
     apiRouter.get('/todos/:date', (req, res) => {
-      // const todosData = jsonfile.readFileSync(todosPath);
-      console.log(req.params.date);
       const date = dayjs(req.params.date);
-      console.log(date);
-      // const todos = todosData.filter((todo: TodoUI) => todo.scheduled === date);
-
       getTodosPerDate(date, todoRepo)
         .then((todos) => {
           res.status(200).send(todos);
         })
-        .catch((err) => {
-          res.status(500).send({ error: err });
+        .catch((error) => {
+          res.status(500).send({ error });
         });
     });
 
     apiRouter.patch('/todos/:key', (req, res) => {
-      const todo = req.body as TodoUI;
-      let todosData = jsonfile.readFileSync(todosPath) as TodoUI[];
-      todosData = todosData.map((t) => (t.key === todo.key ? todo : t));
-      jsonfile.writeFileSync(todosPath, todosData);
-      res.status(200).send();
+      const key = +req.params.key;
+      const { name, description, scheduled, status } = req.body as TodoUI;
+      const todoNoKey: TodoUI = {
+        name,
+        description,
+        scheduled,
+        status,
+      };
+      updateTodo(key, todoNoKey, todoRepo)
+        .then(() => {
+          res.status(204).send();
+        })
+        .catch((error) => {
+          res.status(500).send({ error });
+        });
     });
 
     apiRouter.delete('/todos/:key', (req, res) => {

@@ -1,4 +1,3 @@
-// import 'reflect-metadata';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Status } from '../types/types';
 import { PomodoroDB } from './Pomodoro';

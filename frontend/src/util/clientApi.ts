@@ -2,7 +2,7 @@ import axios from 'axios';
 import { TodoUI } from '../types/types';
 
 const todoApiClient = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: process.env.REACT_APP_SERVER_URL,
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -19,9 +19,9 @@ export const createTodo = async (todo: TodoUI) => {
 };
 
 export const updateTodo = async (todo: TodoUI) => {
-  return await todoApiClient.patch<TodoUI>(`/todos/${todo.key}`, todo);
+  return await todoApiClient.patch<TodoUI>(`/todos/${todo.id}`, todo);
 };
 
 export const deleteTodo = async (todo: TodoUI) => {
-  return await todoApiClient.delete<TodoUI>(`/todos/${todo.key}`);
+  return await todoApiClient.delete<TodoUI>(`/todos/${todo.id}`);
 };
