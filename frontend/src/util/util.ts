@@ -1,14 +1,15 @@
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs, { Dayjs, extend } from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { TodoUI } from '../types/types';
 
-dayjs.extend(isoWeek); // Week starts from Monday at 1 to Sunday at 7
+extend(isoWeek); // Week starts from Monday at 1 to Sunday at 7
 
 /**
  * Generates a sequence of numbers from `start` to `stop` by `step`
- * @param start The start of the range.
- * @param stop The end of the range (inclusive).
- * @param step The increment between each number.
+ * @param {number} start The start of the range.
+ * @param {number} stop The end of the range (inclusive).
+ * @param {number} step The increment between each number.
+ * @return {number[]} The sequence of numbers.
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from#sequence_generator_range
  */
 export const range = (start: number, stop: number, step: number): number[] =>
@@ -22,7 +23,6 @@ export const range = (start: number, stop: number, step: number): number[] =>
  */
 
 export const getSevenDaysIncluding = (date: Date): Dayjs[] => {
-  // dayjs().startOf();
   const day = dayjs(date);
   const days = range(1, 7, 1).map((i) => day.isoWeekday(i));
   return days;
@@ -31,7 +31,8 @@ export const getSevenDaysIncluding = (date: Date): Dayjs[] => {
 /**
  * Given a `todo`, return true if the todo is
  * in the current week, false otherwise
- * @param todo
+ * @param {TodoUI} todo
+ * @return {boolean}
  */
 export const isTaskInCurrentWeek = (todo: TodoUI): boolean => {
   // get the dates from Monday to Sunday that are in the current week

@@ -7,7 +7,7 @@ interface ModalState {
 }
 
 const initialState: ModalState = {
-  isOpen: false,
+  isOpen: false
 };
 
 const modalSlice = createSlice({
@@ -24,11 +24,9 @@ const modalSlice = createSlice({
       state.isOpen = true;
       state.todo = action.payload;
     }
-  },
+  }
 });
 
 // export the typed reducer and the typed actions
 export const { openModal, closeModal, openModalWithTodo } = modalSlice.actions;
 export default modalSlice.reducer;
-
-

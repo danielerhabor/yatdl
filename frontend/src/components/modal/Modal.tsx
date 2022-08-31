@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 
 import { TodoUI } from '../../types/types';
 import { useDeleteTodo, useRefresh, useUpdateTodo } from '../../util/hooks';
@@ -67,11 +67,10 @@ const Modal: React.FC<{
             onChange={(e) =>
               setModalTodo((prev: TodoUI) => ({
                 ...prev,
-                title: e.target.value,
+                title: e.target.value
               }))
             }
-            placeholder="Enter todo title..."
-          ></input>
+            placeholder="Enter todo title..."></input>
         </div>
 
         <textarea
@@ -79,11 +78,10 @@ const Modal: React.FC<{
           onChange={(e) =>
             setModalTodo((prev: TodoUI) => ({
               ...prev,
-              description: e.target.value,
+              description: e.target.value
             }))
           }
-          placeholder="Enter todo description..."
-        ></textarea>
+          placeholder="Enter todo description..."></textarea>
         <footer>
           <button onClick={saveHandler}>Save</button>
           <button onClick={closeHandler}>Cancel</button>
@@ -92,7 +90,7 @@ const Modal: React.FC<{
     </div>
   );
 
-  return ReactDOM.createPortal(reactModal, domModal);
+  return createPortal(reactModal, domModal);
 };
 
 export default Modal;

@@ -5,8 +5,8 @@ const todoApiClient = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-  },
+    'Access-Control-Allow-Origin': '*'
+  }
 });
 
 export const getTodosPerDate = async (date: string) => {

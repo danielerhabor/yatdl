@@ -3,12 +3,12 @@ import TaskList from '../components/todo/TodoList';
 
 import { range } from '../util/util';
 
-import dayjs from 'dayjs';
+import { extend } from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
-dayjs.extend(isoWeek);
+extend(isoWeek);
 
 const App: React.FC = () => {
-  const numDays: number = 7;
+  const numDays = 7;
 
   // console.log("App finishing rendering...");
   return (

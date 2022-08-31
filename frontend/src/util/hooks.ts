@@ -1,11 +1,11 @@
-import { useQuery, useMutation, useQueryClient } from 'react-query';
-
 import {
   createTodo,
   deleteTodo,
   getTodosPerDate,
-  updateTodo,
+  updateTodo
 } from './clientApi';
+
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 export const useRefresh = () => {
   const queryClient = useQueryClient();

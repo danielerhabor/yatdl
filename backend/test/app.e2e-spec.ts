@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import * as dayjs from 'dayjs';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import * as dayjs from 'dayjs';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -29,11 +29,4 @@ describe('AppController (e2e)', () => {
   afterEach(async () => {
     await app.close();
   });
-
-  // it('/ (GET)', () => {
-  //   return request(app.getHttpServer())
-  //     .get('/')
-  //     .expect(200)
-  //     .expect('Hello World!');
-  // });
 });

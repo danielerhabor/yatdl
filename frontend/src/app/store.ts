@@ -3,8 +3,8 @@ import modalReducer from '../features/modalSlice';
 
 export const store = configureStore({
   reducer: {
-    modal: modalReducer,
-  },
+    modal: modalReducer
+  }
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

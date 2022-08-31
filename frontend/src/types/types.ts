@@ -1,7 +1,7 @@
 export enum Status {
   TODO = 'TODO',
   DOING = 'DOING',
-  DONE = 'DONE',
+  DONE = 'DONE'
 }
 
 export class TodoUI {

@@ -1,26 +1,32 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: 'tsconfig.json',
-    tsconfigRootDir: __dirname,
-    sourceType: 'module'
-  },
-  plugins: ['@typescript-eslint/eslint-plugin', 'prettier'],
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    // 'plugin:prettier/recommended',
-    'prettier'
-  ],
-  root: true,
   env: {
+    es2022: true,
     node: true,
     jest: true
   },
-  ignorePatterns: ['.eslintrc.js'],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
+  plugins: ['@typescript-eslint', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'google',
+    'prettier',
+    'plugin:import/recommended',
+    'plugin:import/typescript'
+  ],
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project: './tsconfig.json'
+      },
+      node: true
+    }
+  },
   rules: {
-    '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off'
+    'prettier/prettier': 'error'
   }
 };

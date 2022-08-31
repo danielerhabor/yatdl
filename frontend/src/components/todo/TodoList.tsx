@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 
 import TodoItem from './TodoItem';
 
@@ -6,13 +6,13 @@ import { TodoUI } from '../../types/types';
 
 import styles from './TodoList.module.css';
 
-import dayjs from 'dayjs';
+import dayjs, { extend } from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { useGetTodosPerDate } from '../../util/hooks';
 import NewTodoItem from './NewTodoItem';
-dayjs.extend(isoWeek);
+extend(isoWeek);
 
-const TodoList: React.FC<{ dayNo: number }> = ({ dayNo }) => {
+const TodoList: FC<{ dayNo: number }> = ({ dayNo }) => {
   const date: dayjs.Dayjs = dayjs().isoWeekday(dayNo);
 
   const { isLoading, isError, error, data } = useGetTodosPerDate(
@@ -33,7 +33,7 @@ const TodoList: React.FC<{ dayNo: number }> = ({ dayNo }) => {
 
       return {
         ...todo,
-        scheduled: date,
+        scheduled: date
       };
     });
   }

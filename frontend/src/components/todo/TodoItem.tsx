@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import { TodoUI } from '../../types/types';
 
-import styles from './TodoItem.module.css';
 import Modal from '../modal/Modal';
+import styles from './TodoItem.module.css';
 
-const TodoItem: React.FC<{ todo: TodoUI }> = ({ todo }) => {
+const TodoItem: FC<{ todo: TodoUI }> = ({ todo }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const openModalHandler = () => {
