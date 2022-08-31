@@ -27,7 +27,8 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
     // increase the severity of rules so they are auto-fixable
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    'require-jsdoc': 'off'
   },
   settings: {
     'import/resolver': {

@@ -10,7 +10,6 @@ extend(isoWeek);
 const App: React.FC = () => {
   const numDays = 7;
 
-  // console.log("App finishing rendering...");
   return (
     <>
       <header>
