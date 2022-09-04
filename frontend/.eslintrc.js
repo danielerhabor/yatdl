@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es2022: true,
@@ -21,10 +22,10 @@ module.exports = {
     ecmaFeatures: {
       jsx: true
     },
-    ecmaVersion: 'latest',
-    sourceType: 'module'
+    ecmaVersion: 'latest'
+    // sourceType: 'module'
   },
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: ['react', '@typescript-eslint', 'prettier', 'import'],
   rules: {
     // increase the severity of rules so they are auto-fixable
     'prettier/prettier': 'error',
@@ -32,10 +33,7 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      typescript: {
-        project: './tsconfig.json'
-      },
-      node: true
+      typescript: {}
     }
   }
 };

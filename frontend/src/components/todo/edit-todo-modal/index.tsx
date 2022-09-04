@@ -1,25 +1,25 @@
-import { useState } from 'react';
-import { createPortal } from 'react-dom';
+import { FC, useState } from 'react';
 
-import { TodoUI } from '../../types/types';
-import { useDeleteTodo, useRefresh, useUpdateTodo } from '../../util/hooks';
-
-import styles from './Modal.module.css';
+import { useDeleteTodo, useRefresh, useUpdateTodo } from '../client-api/hooks';
+import { TodoUI } from '../types';
 
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, Modal, Typography } from '@mui/material';
 
-const Modal: React.FC<{
+const EditTodoModal: FC<{
   todo: TodoUI;
   onClose: CallableFunction;
 }> = ({ todo, onClose }) => {
   const [modalTodo, setModalTodo] = useState<TodoUI>(todo);
+  const [isOpen, setIsOpen] = useState(true);
   const refresh = useRefresh();
   const updateTodo = useUpdateTodo();
   const deleteTodo = useDeleteTodo();
 
   const closeHandler = () => {
     clearModal();
+    setIsOpen(false);
     onClose();
   };
 
@@ -47,20 +47,23 @@ const Modal: React.FC<{
     }
   };
 
-  const domModal = document.getElementById('root-modal') as HTMLElement;
-  const reactModal = (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modalContainer}>
-        <header className={styles.modalHeader}>
-          <p>{modalTodo.scheduled}</p>
-          <button onClick={() => closeHandler()} className="modalCloseButton">
-            &times;
-          </button>
+  // const openPomodoroModal = () => {
+  //   // This opens the pomodoro modal that has the settings for the new timer
+  //   // that should be started
+  //   <PomodoroModal />;
+  // };
 
-          <button onClick={() => deleteHandler()}>
+  return (
+    <Modal open={isOpen}>
+      <>
+        <header>
+          <Typography component={'p'}>{modalTodo.scheduled}</Typography>
+          <Button onClick={() => closeHandler()}>&times;</Button>
+          <Button onClick={() => deleteHandler()}>
             <FontAwesomeIcon icon={faTrashAlt} />
-          </button>
+          </Button>
         </header>
+
         <div>
           <input
             value={modalTodo.title}
@@ -71,6 +74,9 @@ const Modal: React.FC<{
               }))
             }
             placeholder="Enter todo title..."></input>
+          <Button onClick={() => console.log(`Add Pomodoro button clicked...`)}>
+            Add Pomodoro
+          </Button>
         </div>
 
         <textarea
@@ -83,14 +89,12 @@ const Modal: React.FC<{
           }
           placeholder="Enter todo description..."></textarea>
         <footer>
-          <button onClick={saveHandler}>Save</button>
-          <button onClick={closeHandler}>Cancel</button>
+          <Button onClick={saveHandler}>Save</Button>
+          <Button onClick={closeHandler}>Cancel</Button>
         </footer>
-      </div>
-    </div>
+      </>
+    </Modal>
   );
-
-  return createPortal(reactModal, domModal);
 };
 
-export default Modal;
+export default EditTodoModal;

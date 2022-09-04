@@ -1,16 +1,13 @@
 import { FC } from 'react';
 
-import TodoItem from './TodoItem';
-
-import { TodoUI } from '../../types/types';
-
-import styles from './TodoList.module.css';
-
 import dayjs, { extend } from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
-import { useGetTodosPerDate } from '../../util/hooks';
-import NewTodoItem from './NewTodoItem';
 extend(isoWeek);
+
+import CreateTodoItem from 'components/todo/create-todo';
+import { useGetTodosPerDate } from 'components/todo/hooks';
+import TodoItem from 'components/todo/todo-item';
+import { TodoUI } from 'components/todo/types';
 
 const TodoList: FC<{ dayNo: number }> = ({ dayNo }) => {
   const date: dayjs.Dayjs = dayjs().isoWeekday(dayNo);
@@ -28,7 +25,7 @@ const TodoList: FC<{ dayNo: number }> = ({ dayNo }) => {
   }
   let todos: TodoUI[] = [];
   if (data) {
-    todos = data.map((todo) => {
+    todos = data.map((todo: TodoUI) => {
       const date = todo.scheduled.split('T')[0];
 
       return {
@@ -39,13 +36,13 @@ const TodoList: FC<{ dayNo: number }> = ({ dayNo }) => {
   }
 
   return (
-    <div className={styles.todoList}>
+    <div>
       <h2>{date.format('dddd')}</h2>
       <ul>
         {todos.map((todo: TodoUI) => (
           <TodoItem key={todo.id} todo={todo} />
         ))}
-        <NewTodoItem date={date.format('YYYY-MM-DD')} />
+        <CreateTodoItem date={date.format('YYYY-MM-DD')} />
       </ul>
     </div>
   );

@@ -1,8 +1,8 @@
 import dayjs, { Dayjs, extend } from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
-import { TodoUI } from '../types/types';
-
 extend(isoWeek); // Week starts from Monday at 1 to Sunday at 7
+
+import { TodoUI } from 'components/todo/types';
 
 /**
  * Generates a sequence of numbers from `start` to `stop` by `step`

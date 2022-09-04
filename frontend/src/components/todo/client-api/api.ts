@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TodoUI } from '../types/types';
+import { TodoUI } from 'components/todo/types';
 
 const todoApiClient = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,

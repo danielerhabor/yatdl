@@ -1,9 +1,4 @@
-import {
-  createTodo,
-  deleteTodo,
-  getTodosPerDate,
-  updateTodo
-} from './clientApi';
+import { createTodo, deleteTodo, getTodosPerDate, updateTodo } from './api';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 

@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
-import { TodoUI } from '../../types/types';
-import { useCreateTodo, useRefresh } from '../../util/hooks';
-import styles from './NewTodoItem.module.css';
 
-const NewTodoItem: FC<{ date: string }> = ({ date }) => {
+import { useCreateTodo, useRefresh } from 'components/todo/client-api/hooks';
+import { TodoUI } from 'components/todo/types';
+
+const CreateTodoItem: FC<{ date: string }> = ({ date }) => {
   const [newTodoTitle, setNewTodoTitle] = useState<string>('');
   const refresh = useRefresh();
   const createTodo = useCreateTodo();
@@ -29,9 +29,8 @@ const NewTodoItem: FC<{ date: string }> = ({ date }) => {
       onBlur={() => {
         newTodoTitle && blurHandler();
       }} // if the input field is not empty, blurHandler is called
-      onChange={(e) => setNewTodoTitle(e.target.value)}
-      className={styles.newTodoItem}></input>
+      onChange={(e) => setNewTodoTitle(e.target.value)}></input>
   );
 };
 
-export default NewTodoItem;
+export default CreateTodoItem;

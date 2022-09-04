@@ -1,5 +1,5 @@
-import NavBar from '../components/nav/NavBar';
-import TaskList from '../components/todo/TodoList';
+import NavBar from 'components/nav/NavBar';
+import TodoList from 'components/todo/todo-list';
 
 import { range } from '../util/util';
 
@@ -22,7 +22,7 @@ const App: React.FC = () => {
       </main>
 
       {range(1, numDays, 1).map((dayNo) => (
-        <TaskList key={dayNo} dayNo={dayNo} />
+        <TodoList key={dayNo} dayNo={dayNo} />
       ))}
     </>
   );
