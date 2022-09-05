@@ -22,18 +22,24 @@ module.exports = {
     ecmaFeatures: {
       jsx: true
     },
-    ecmaVersion: 'latest'
-    // sourceType: 'module'
+    ecmaVersion: 'latest',
+    sourceType: 'module'
   },
   plugins: ['react', '@typescript-eslint', 'prettier', 'import'],
   rules: {
     // increase the severity of rules so they are auto-fixable
     'prettier/prettier': 'error',
-    'require-jsdoc': 'off'
+    'require-jsdoc': 'off',
+    'import/no-unresolved': 'off' // linting errors only on VSCode but not on terminal and no-one seems to know why
   },
   settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx']
+    },
     'import/resolver': {
-      typescript: {}
+      typescript: {
+        project: 'tsconfig.json'
+      }
     }
   }
 };

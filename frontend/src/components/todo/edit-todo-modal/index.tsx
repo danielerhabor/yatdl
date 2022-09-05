@@ -1,7 +1,11 @@
 import { FC, useState } from 'react';
 
-import { useDeleteTodo, useRefresh, useUpdateTodo } from '../client-api/hooks';
-import { TodoUI } from '../types';
+import {
+  useDeleteTodo,
+  useRefresh,
+  useUpdateTodo
+} from 'components/todo/client-api/hooks';
+import { TodoUI } from 'components/todo/types';
 
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

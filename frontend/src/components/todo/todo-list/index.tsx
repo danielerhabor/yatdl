@@ -4,8 +4,8 @@ import dayjs, { extend } from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 extend(isoWeek);
 
+import { useGetTodosPerDate } from 'components/todo/client-api/hooks';
 import CreateTodoItem from 'components/todo/create-todo';
-import { useGetTodosPerDate } from 'components/todo/hooks';
 import TodoItem from 'components/todo/todo-item';
 import { TodoUI } from 'components/todo/types';
 
