@@ -3,7 +3,7 @@ services:
   postgres:
     hostname: postgres
     container_name: postgres
-    image: postgres
+    image: postgres:yatdl
     build:
       context: .
       dockerfile: postgres.Dockerfile
@@ -25,7 +25,7 @@ services:
     build:
       context: .
       dockerfile: pgadmin4.Dockerfile
-    image: pgadmin4
+    image: pgadmin4:yatdl
     restart: always
     environment:
       - PGADMIN_HOST_LISTEN_PORT=${PGADMIN_HOST_LISTEN_PORT}
