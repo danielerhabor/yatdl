@@ -50,7 +50,13 @@ services:
     image: backend:yatdl
     restart: always
     tty: true
-    command: 'tail -f /dev/null'
+    # command: 'tail -f /dev/null' # for debugging
+    command:
+      - bash
+      - -c
+      - |
+        yarn migrate:postgres
+        yarn start:dev
     environment:
       - SERVER_PORT=${SERVER_PORT}
       - DATABASE_URL=${DATABASE_URL}
@@ -73,7 +79,8 @@ services:
     image: frontend:yatdl
     restart: always
     tty: true
-    command: 'tail -f /dev/null'
+    # backup command: 'tail -f /dev/null' # for debugging
+    command: 'yarn start'
     environment:
       - REACT_APP_CLIENT_PORT=${CLIENT_PORT}
       - REACT_APP_SERVER_PORT=${SERVER_PORT}

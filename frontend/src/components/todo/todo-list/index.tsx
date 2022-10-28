@@ -1,8 +1,6 @@
 import { FC } from 'react';
 
-import dayjs, { extend } from 'dayjs';
-import isoWeek from 'dayjs/plugin/isoWeek';
-extend(isoWeek);
+import dayjs from 'libs/dayjs';
 
 import { useGetTodosPerDate } from 'components/todo/client-api/hooks';
 import CreateTodoItem from 'components/todo/create-todo';

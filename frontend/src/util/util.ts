@@ -1,8 +1,5 @@
-import dayjs, { Dayjs, extend } from 'dayjs';
-import isoWeek from 'dayjs/plugin/isoWeek';
-extend(isoWeek); // Week starts from Monday at 1 to Sunday at 7
-
 import { TodoUI } from 'components/todo/types';
+import dayjs from 'libs/dayjs';
 
 /**
  * Generates a sequence of numbers from `start` to `stop` by `step`
@@ -18,11 +15,11 @@ export const range = (start: number, stop: number, step: number): number[] =>
 /**
  * Given a `Date` object, `date` return and array list of
  * seven `Date` objects such that Monday <= `date` <= Sunday
- * @param date
+ * @param {Date} date
+ * @return {dayjs.Dayjs[]} An array of seven `dayjs.Dayjs` objects
  *
  */
-
-export const getSevenDaysIncluding = (date: Date): Dayjs[] => {
+export const getSevenDaysIncluding = (date: Date): dayjs.Dayjs[] => {
   const day = dayjs(date);
   const days = range(1, 7, 1).map((i) => day.isoWeekday(i));
   return days;
@@ -36,8 +33,14 @@ export const getSevenDaysIncluding = (date: Date): Dayjs[] => {
  */
 export const isTaskInCurrentWeek = (todo: TodoUI): boolean => {
   // get the dates from Monday to Sunday that are in the current week
-  // console.log(task);
   const sevenDays = getSevenDaysIncluding(new Date());
-  // console.log(sevenDays);
   return sevenDays.some((day) => day.isSame(dayjs(todo.scheduled), 'day'));
+};
+/**
+ *
+ * @param {dayjs.Dayjs} date
+ * @return {string} The month and year of the date in the format of "MMM YYYY" or "Sep 2022"
+ */
+export const getMonthFromDate = (date: dayjs.Dayjs): string => {
+  return date.format('MMM YYYY');
 };

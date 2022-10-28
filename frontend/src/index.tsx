@@ -1,10 +1,8 @@
 import { createRoot } from 'react-dom/client';
-
-import App from './app/App';
-import './index.css';
-
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+
+import App from 'app';
 
 const queryClient = new QueryClient();
 
