@@ -1,4 +1,4 @@
-FROM node:node:18.12.0
+FROM node:18.12.0
 # update and upgrade
 RUN apt-get update && apt-get upgrade -y
 
