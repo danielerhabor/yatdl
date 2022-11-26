@@ -20,12 +20,6 @@ const Header: FC<{ date: dayjs.Dayjs }> = ({ date }) => {
     alignItems: 'center'
   };
 
-  // const ArrowSx: SxProps<Theme> = {
-  //   borderRadius: '50%',
-  //   backgroundColor: '#000',
-  //   color: '#fff'
-  // };
-
   return (
     <Grid
       container
