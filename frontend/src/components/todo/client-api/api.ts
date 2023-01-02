@@ -2,7 +2,7 @@ import axios from 'axios';
 import { TodoUI } from 'components/todo/types';
 
 const todoApiClient = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_URL,
+  baseURL: process.env.SERVER_URL,
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*'

@@ -3,8 +3,8 @@ import { FC } from 'react';
 import dayjs from 'libs/dayjs';
 
 import { useGetTodosPerDate } from 'components/todo/client-api/hooks';
-import CreateTodoItem from 'components/todo/create-todo';
-import TodoItem from 'components/todo/todo-item';
+import CreateTodoItem from 'components/todo/CreateTodoItem';
+import TodoItem from 'components/todo/TodoItem';
 import { TodoUI } from 'components/todo/types';
 
 const TodoList: FC<{ dayNo: number }> = ({ dayNo }) => {

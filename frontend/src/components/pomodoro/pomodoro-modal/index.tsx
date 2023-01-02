@@ -1,4 +1,4 @@
-import { Modal, Typography } from '@mui/material';
+// import { Modal, Typography } from '@mui/material';
 import { Component } from 'react';
 
 type PomodoroModalState = {
@@ -18,12 +18,12 @@ export class PomodoroModal extends Component<PomodoroModalState> {
     //   'root-pomodoro-modal'
     // ) as HTMLElement;
 
-    const modal = (
-      <Modal open={this.state.isOpen}>
-        <Typography variant="h3">Edit Pomodoro</Typography>
-      </Modal>
-    );
-    return modal;
+    // const modal = (
+    //   <Modal open={this.state.isOpen}>
+    //     <Typography variant="h3">Edit Pomodoro</Typography>
+    //   </Modal>
+    // );
+    return <p>Pomodoro Modal Goes Here</p>;
   }
 }
 
